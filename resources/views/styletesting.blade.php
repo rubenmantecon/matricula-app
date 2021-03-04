@@ -5,7 +5,9 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
+
 	<title>Loooreeem Ipsuuuuum </title>
 </head>
 
@@ -16,7 +18,7 @@
 		<a href="#">Clients</a>
 		<a href="#">Contact Us</a>
 	</nav>
-	<h1>Testing of styles for a Blade Template</h1>
+	<h1>Testing of classless styling</h1>
 	<h2>Kitchen Sink</h2>
 	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
 
@@ -73,7 +75,7 @@
 
 		<div>
 			<label for="textarea">Textarea:</label>
-			<textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+			<textarea cols="87" rows="8" name="textarea" id="textarea"></textarea>
 		</div>
 
 		<div>
@@ -85,7 +87,9 @@
 			<input type="submit" value="Submit" />
 		</div>
 	</form>
-
+	<hr>
+	<h1>Experimentation with Blade's capabilities and options</h1>
+	<p>Here below, I'm <code>including</code> a Laravel Blade component via the <code>include</code>directive (not working much, for now)</p>
+	
 </body>
-
 </html>
