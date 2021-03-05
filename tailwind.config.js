@@ -7,7 +7,7 @@ module.exports = {
     ],
     darkMode: 'media', // or false or 'class'
     theme: {
-        extend: {},
+        extend: {colors:{"leFocus": "var(--focus)"}},
     },
     variants: {
         extend: {},

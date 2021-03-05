@@ -2,7 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.containerGris {
-	@apply container;
-	@apply bg-gray-400;
+@layer base {
+	:root{
+		--focus: #0096bfab;
+
+	}
+	h1 {
+		@apply bg-leFocus
+	}
 }
