@@ -1,11 +1,14 @@
 module.exports = {
+    corePlugins: {
+        preflight: false,
+    },
     purge: [
         "./storage/framework/views/*.php",
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
-    darkMode: false, // or 'media' or 'class'
+    darkMode: "media", // or false or 'class'
     theme: {
         extend: {},
     },
