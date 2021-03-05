@@ -17,7 +17,7 @@ class CreaTaulaCurso extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->timestamp("start");
-            $table->timestamp("end");
+            $table->timestamp("end")->nullable();
             $table->string("name");
             $table->longText("description");
             $table->boolean("active");
