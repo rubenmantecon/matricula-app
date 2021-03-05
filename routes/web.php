@@ -21,10 +21,28 @@ Route::get('/test', function () {
 	return view('styletesting');
 });
 
+// Redirect user to admin panel or user panel according to their role
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (Auth::check()) {
+        if(Auth::user()->role == "admin"){
+            return view('dashboardadmin');
+        }
+        if (Auth::user()->role == "user") {
+            return view('dashboard');
+        }
+    }
 })->middleware(['auth'])->name('dashboard');
 
 
+Route::name('admin')
+  ->prefix('admin')
+  ->middleware(['auth', 'can:accessAdmin'])
+  ->group(function () {
+    Route::get('dashboard', function() {
+        return view('dashboardadmin');
+    });        
+
+    Route::resource('users', 'UserController');
+});
 
 require __DIR__.'/auth.php';
