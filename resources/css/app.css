@@ -2,12 +2,3 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@layer base {
-	:root{
-		--focus: #0096bfab;
-
-	}
-	h1 {
-		@apply bg-leFocus
-	}
-}
