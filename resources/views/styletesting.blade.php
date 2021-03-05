@@ -7,9 +7,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
-
-<!-- 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
- -->
 	<title>Loooreeem Ipsuuuuum </title>
 </head>
 
@@ -92,6 +89,18 @@
 	<hr>
 	<h1>Experimentation with Blade's capabilities and options</h1>
 	<p>Here below, I'm <code>including</code> a Laravel Blade component via the <code>include</code>directive (not working much, for now)</p>
-	
+	<table>
+		<th>Nom</th>
+		<th>Correu electrònic</th>
+		<tbody>
+			@foreach ($users as $user)
+			<tr>
+				<td>{{ $user->name }}</td>
+				<td>{{$user->email}}</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
 </body>
+
 </html>
