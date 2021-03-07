@@ -91,8 +91,10 @@
 	<h1>Experimentation with Blade's capabilities and options</h1>
 	<p>Here below, I'm <code>including</code> a Laravel Blade component via the <code>include</code>directive (not working much, for now)</p>
 	<table>
-		<th>Nom</th>
-		<th>Correu electrònic</th>
+		<thead>
+			<th>Nom</th>
+			<th>Correu electrònic</th>
+		</thead>
 		<tbody>
 			@foreach ($users as $user)
 			<tr>
@@ -101,6 +103,7 @@
 			</tr>
 			@endforeach
 		</tbody>
+		<tfoot></tfoot>
 	</table>
 </body>
 
