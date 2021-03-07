@@ -123,13 +123,9 @@ class CreaTaulaCurso extends Migration
         });
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
             $table->string("level");
             $table->timestamp("time");
             $table->string("message");
-
-            $table->foreign("user_id")->references("id")->on("users");            
-
         });
     }
 
@@ -199,11 +195,6 @@ class CreaTaulaCurso extends Migration
 
         });
         Schema::dropIfExists('uploads');
-        Schema::table("logs", function(Blueprint $table){
-            $table->dropColumn('user_id');
-           
-
-        });
         Schema::dropIfExists('logs');
     }
 }
