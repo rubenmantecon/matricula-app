@@ -105,6 +105,21 @@
 		</tbody>
 		<tfoot></tfoot>
 	</table>
+	<script>
+		//Make any table editable
+		$('table').editableTableWidget();
+		//Beware! CORS must be configured at the web server engine level for AJAX to work
+		//Below is a simple jQuery AJAX call to prove it works
+		$('table td').change(function(event, value) {
+			$.ajax({
+				type: 'GET',
+				url: `https://www.pokeapi.co/api/v2/pokemon/${value}`,
+				})
+				.done(function(data) {
+					//Do something with the response
+				})
+		});
+	</script>
 </body>
 
 </html>
