@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Log;
+use Illuminate\Testing\TestResponse;
+//use Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
+Route::get('/cursos', function () {
+    return view('cursos');
+})->middleware(['auth',  'can:accessAdmin'])->name('cursos');
+
+Route::get('/alumnes', function () {
+    return view('alumnes');
+})->middleware(['auth',  'can:accessAdmin'])->name('alumnes ');
+
 Route::name('admin')
   ->prefix('admin')
   ->middleware(['auth', 'can:accessAdmin'])
@@ -47,7 +56,6 @@ Route::name('admin')
     Route::get('dashboard', function() {
         return view('dashboardadmin');
     });        
-
     Route::resource('users', 'UserController');
 });
 
