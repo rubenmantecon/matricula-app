@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,6 +32,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $user = Auth::user();
+        Log::channel('dblogs')->debug("Action: Log In - User: ".$user->name ." with ID: ".$user->id." Logged In Succesfully");
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

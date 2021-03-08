@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,8 @@ use App\Models\User;
 Route::get('/', function () {
 	return view('welcome');
 });
+
+
 
 Route::get('/test', function () {
 	$data = User::all();
@@ -48,3 +52,12 @@ Route::name('admin')
 });
 
 require __DIR__ . '/auth.php';
+
+
+//Page to test logs, if you enter to this route a log will be written in the logs table
+Route::get("/log", function(){
+    $user = Auth::user();
+    Log::channel('dblogs')->debug("Action: Testing - ID: ".$user->id." User: ".$user->name);
+ 
+    return ["result" => true];
+});
