@@ -15,6 +15,6 @@
     <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
     </form>
-    <H2>403 | NO TENS AUTORITZACIÓ</H2>
+    <H2>403 Forbidden | NO TENS AUTORITZACIÓ</H2>
 </body>
 </html>

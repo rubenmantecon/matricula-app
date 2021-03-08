@@ -13,7 +13,6 @@ class CreaTaulaCurso extends Migration
      */
     public function up()
     {
-        
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->timestamp("start");
@@ -28,6 +27,7 @@ class CreaTaulaCurso extends Migration
             $table->string("name");
             $table->string("code");
             $table->longText("description");
+            $table->softDeletes("soft_delete");
 
             $table->foreign("term_id")->references("id")->on("terms");
             

@@ -32,7 +32,7 @@ Route::get('/test', function () {
 Route::get('/dashboard', function () {
     if (Auth::check()) {
         if(Auth::user()->role == "admin"){
-            return view('dashboardadmin');
+            return redirect('/admin/dashboard');
         }
         if (Auth::user()->role == "user") {
             return view('dashboard');
@@ -40,24 +40,21 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/admin', function () {
+    return redirect('/admin/dashboard');
+})->middleware(['auth',  'can:accessAdmin'])->name('dashboard');
 
-Route::get('/cursos', function () {
+Route::get('/admin/dashboard', function () {
+    return view('dashboardadmin');
+})->middleware(['auth',  'can:accessAdmin'])->name('dashboard');
+
+Route::get('/admin/dashboard/cursos', function () {
     return view('cursos');
 })->middleware(['auth',  'can:accessAdmin'])->name('cursos');
 
-Route::get('/alumnes', function () {
+Route::get('/admin/dashboard/alumnes', function () {
     return view('alumnes');
 })->middleware(['auth',  'can:accessAdmin'])->name('alumnes ');
-
-Route::name('admin')
-  ->prefix('admin')
-  ->middleware(['auth', 'can:accessAdmin'])
-  ->group(function () {
-    Route::get('dashboard', function() {
-        return view('dashboardadmin');
-    });        
-    Route::resource('users', 'UserController');
-});
 
 require __DIR__ . '/auth.php';
 
