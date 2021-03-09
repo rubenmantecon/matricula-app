@@ -31,7 +31,7 @@ Route::post('/test', function (Request $request) {
         //TODO: change the key array
     //$dataArray=json_decode($request->array,true);
 	if($action=='delete'){
-			print_Career::find($request->id));
+			Career::find($request->id);
             Career::find($request->id)->delete();
 
     }
