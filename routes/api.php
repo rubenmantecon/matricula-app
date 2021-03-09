@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,19 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Two routes for mockup
 Route::get('/test', function (Request $request) {
-	return response()->json([
-		[
-			'id' => 'Comes from the callback',
-			'name' => 'Bobby McFerrins',
-			'email' => 'marvin@whatsgoingon.gaye'
-		], [
-			'id' => 'The second one',
-			'name' => 'Billy Butcha',
-			'email' => 'Fakin cant'
-		]
-	]);
+	$data = User::all();
+	return response()->json($data);
 });
 
 Route::post('/test', function (Request $request) {
+
 	return response()->json('You POSTed this: ');
 });
