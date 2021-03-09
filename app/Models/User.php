@@ -7,9 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Enrolment;
+use App\Models\Record;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public function enrolments(){
+        return $this->belongsTo(Enrolment::class);
+    }
+    public function records(){
+        return $this->belongsTo(Record::class);
+    }
 
     /**
      * The attributes that are mass assignable.
