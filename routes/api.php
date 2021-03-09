@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Career;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +21,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Two routes for mockup
 Route::get('/test', function (Request $request) {
-	return response()->json([
-		[
-			'id' => 'Comes from the callback',
-			'name' => 'Bobby McFerrins',
-			'email' => 'marvin@whatsgoingon.gaye'
-		], [
-			'id' => 'The second one',
-			'name' => 'Billy Butcha',
-			'email' => 'Fakin cant'
-		]
-	]);
+	return response()->json(
+		Career::all()
+		);
 });
 
 Route::post('/test', function (Request $request) {
+	$action= $request->action;
+        //TODO: change the key array
+    //$dataArray=json_decode($request->array,true);
+	if($action=='delete'){
+			print_Career::find($request->id));
+            Career::find($request->id)->delete();
+
+    }
 	return response()->json('You POSTed this: ');
+
 });
