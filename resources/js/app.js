@@ -1,5 +1,6 @@
 require("./bootstrap");
-require("./scripts.js");
+require("./scripts");
 require("./jquery-3.6.0.min");
 require("./mindup.editabletable.js");
 require("alpinejs");
+
