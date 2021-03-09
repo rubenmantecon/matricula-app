@@ -107,21 +107,12 @@
 							<td contenteditable="false">${response[jsonObject]['name']}</td>
 							<td contenteditable="false">${response[jsonObject]['email']}</td>
 							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-							
-						<td><button class="delete bg-red-400">Borra</button></td>
+							<td><button class="delete bg-red-400">Borra</button></td>
 						</tr>`)
 					}
 				});
 			</script>
-			@foreach ($users as $user)
-			<tr id="Viene de la BD">
-				<td><input type="checkbox"></td>
-				<td contenteditable="false">{{ $user->name }}</td>
-				<td contenteditable="false">{{$user->email}}</td>
-				<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-				<td><button class="delete bg-red-400">Borra</button></td>
-			</tr>
-			@endforeach
+			
 		</tbody>
 		<tfoot></tfoot>
 	</table>
@@ -158,37 +149,42 @@
 						</tr>`)
 				}
 			});
-
 		})
-		$('.delete').click(function() {
-			//Alert, pidiendo confirmación de borrado con botón
-			confirm('Pero tú ya sabes lo que haces')
-			let id = $(this).parent().parent().attr('id')
-			//Send id via POST to trigger deletion
-			$.post('/api/test', {
-				action: 'delete',
-				id: 'id'
-			});
-			//Refresh view after deletion
-			$('tbody').empty();
-			$.getJSON('/api/test').done(response => {
-				for (const jsonObject in response) {
-					//Empty the whole tbody
-					//Repopulate tbody with data via GET
-					$('tbody')
-						.append(`
-						<tr id="${response[jsonObject]['id']}">
-							<td><input type="checkbox"></td>
-							<td contenteditable="false">${response[jsonObject]['name']}</td>
-							<td contenteditable="false">${response[jsonObject]['email']}</td>
-							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button></td>
-						<td><button class="delete bg-red-400">Borra</button></td>
-						</tr>`)
-				}
-			});
 
-		})
+	})
+	$('.delete').click(function() {
+		//Alert, pidiendo confirmación de borrado con botón
+		let userDecision = confirm('Pero tú ya sabes lo que haces?')
+		if (userDecision == true) {
+			let userConfirmation = prompt('Introcuce el nombre del curso');
+			if (userConfirmation == $(this).parent().parent().val()) {
+				let id = $(this).parent().parent().attr('id')
+				//Send id via POST to trigger deletion
+				$.post('/api/test', {
+					action: 'delete',
+					id: 'id'
+				});
+				//Refresh view after deletion
+				$('tbody').empty();
+				$.getJSON('/api/test').done(response => {
+					for (const jsonObject in response) {
+						//Empty the whole tbody
+						//Repopulate tbody with data via GET
+						$('tbody')
+							.append(`
+								<tr id="${response[jsonObject]['id']}">
+									<td><input type="checkbox"></td>
+									<td contenteditable="false">${response[jsonObject]['name']}</td>
+									<td contenteditable="false">${response[jsonObject]['email']}</td>
+									<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button></td>
+								<td><button class="delete bg-red-400">Borra</button></td>
+								</tr>`)
+					}
+				});
+			}
+		}
 	})
 </script>
+	
 
 </html>
