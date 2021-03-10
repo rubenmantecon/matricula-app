@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="{{ asset('css/app.scss') }}">
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<title>Loooreeem Ipsuuuuum </title>
@@ -95,28 +95,12 @@
 			<th></th>
 			<th>Nom</th>
 			<th>Codi</th>
-			<th>Descripci</th>
+			<th>Descripció</th>
 		</thead>
 		<tbody>
-			<script>
-				//Proves that I can get data from endpoint
-				$.getJSON('/api/test').done(response => {
-
-					for (const jsonObject in response) {
-						$('tbody').append(`
-						<tr id="${response[jsonObject]['id']}">
-							<td><input type="checkbox"></td>
-							<td contenteditable="false">${response[jsonObject]['name']}</td>
-							<td contenteditable="false">${response[jsonObject]['code']}</td>
-							<td contenteditable="false">${response[jsonObject]['description']}</td>
-							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-							<td><button class="delete bg-red-400">Borra</button></td>
-						</tr>`)
-					}
-				});
-			</script>
+			
 			@foreach ($careers as $career)
-			<tr id="Viene de la BD">
+			<tr id=<?php echo $career->id;  ?>>
 				<td><input type="checkbox"></td>
 				<td contenteditable="false">{{ $career->name }}</td>
 				<td contenteditable="false">{{$career->code}}</td>
@@ -143,19 +127,22 @@
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
+		var id_career = $(this).parent().parent().attr('id');
+		var name_career=$('#'+id_career +">td").eq(1).text();
+		var code_career=$('#'+id_career +">td").eq(2).text();
+		var description_career=$('#'+id_career +">td").eq(3).text();
 
 		$.post('/api/test', {
-			action: 'delete',
-			id: 1,
+			action: 'update',
+			result:[{id:id_career},{name:name_career},{code:code_career},{description:description_career}] 
 		});
-
 		$('tbody').empty();
 		$.getJSON('/api/test').done(response => {
 			for (const jsonObject in response) {
 				$('table').append(`
 						<tr id="${response[jsonObject]['id']}">
 							<td><input type="checkbox"></td>
-							<td contenteditable="false">${response[jsonObject]['name']}</td>
+							<td  contenteditable="false">${response[jsonObject]['name']}</td>
 							<td contenteditable="false">${response[jsonObject]['code']}</td>
 							<td contenteditable="false">${response[jsonObject]['description']}</td>
 							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
@@ -171,7 +158,7 @@
 		//Send id via POST to trigger deletion
 		$.post('/api/test', {
 			action: 'delete',
-			id: 'id'
+			id: id
 		});
 		//Refresh view after deletion
 		$('tbody').empty();
@@ -191,9 +178,7 @@
 						</tr>`)
 			}
 		});
-
 	})
-
 	$('.delete').click(function() {
 		//Alert, pidiendo confirmación de borrado con botón
 		let userDecision = confirm('Pero tú ya sabes lo que haces?')

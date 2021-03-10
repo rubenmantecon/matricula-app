@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\User;
-use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Career;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Two routes for mockup
+
 Route::get('/test', function (Request $request) {
 	return response()->json(
 		Career::all()
@@ -29,13 +29,45 @@ Route::get('/test', function (Request $request) {
 
 Route::post('/test', function (Request $request) {
 	$action= $request->action;
+	$message="invalid action";
         //TODO: change the key array
     //$dataArray=json_decode($request->array,true);
-	if($action=='delete'){
-			Career::find($request->id);
+    if($action=='delete'){
+
             Career::find($request->id)->delete();
+            $message="Register deleted succesfully";
+
+    }else if($action=='create'){
+    		$createArray=$request->result;
+    	    $id=(int)$createArray[0]["id"];
+    	    $name=$createArray[1]["name"];
+    	    $code=$createArray[2]["code"];
+    	    $desc=$createArray[3]["description"];
+
+    		Career::create([
+                'term_id'=>1,
+                'name'=>$name,
+                'code'=>$code,
+                'description'=>$description,
+               
+            ]);
+            
 
     }
-	return response()->json('You POSTed this: ');
+    else if($action=='update'){
+    	    $dataArray=$request->result;
+    	    $id=(int)$dataArray[0]["id"];
+    	    $name=$dataArray[1]["name"];
+    	    $code=$dataArray[2]["code"];
+    	    $desc=$dataArray[3]["description"];
+    	  
+    		Career::where('id',$id)->update(['name' => $name]);
+    		Career::where('id',$id)->update(['code' => $code]);
+    		Career::where('id',$id)->update(['description' => $desc]);
+			
+            $message="Register updated succesfully";
+
+    }
+	return response()->json($message);
 
 });
