@@ -109,21 +109,56 @@
 				<td><button class="delete bg-red-400">Borra</button></td>
 			</tr>
 			@endforeach
+
 		</tbody>
-		<tfoot></tfoot>
+		<tfoot>
+		</tfoot>
+		
 	</table>
+	<tr id="createCareer">
+				<button class="create">Afegeix un curs</button>
+		</tr>
 </body>
 <script>
-	$('.edit').click(function() {
+	$(document.body).on('click','.edit',function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
 		$(this).siblings().removeClass('hidden')
 	});
-	$('.cancel').click(function() {
+
+	$(document.body).on('click','.create',function(){
+		if($('#createRow').length){
+
+		}else{
+			$('table').append(`<tr id="createRow">
+							<td><input type="checkbox"></td>
+							<td  contenteditable="true">Nom</td>
+							<td contenteditable="true">Codi</td>
+							<td contenteditable="true">Descripcio</td>
+							<td><button class="saveCreate">Guarda</button></td>
+							<td><button class="cancelCreate">Cancela</button></td>
+						</tr>`)
+		}
+		
+	});
+	$(document.body).on('click','.cancelCreate',function(){
+		$('#createRow').remove()
+	});
+	$(document.body).on('click','.saveCreate',function(){
+		var name_career=$("#createRow>td").eq(1).text();
+		var code_career=$("#createRow>td").eq(2).text();
+		var description_career=$("#createRow>td").eq(3).text();
+		$.post('/api/test', {
+			action: 'create',
+			result:[{name:name_career},{code:code_career},{description:description_career}] 
+		});
+	})
+
+	$(document.body).on('click','.cancel',function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
 	});
-	$('.update').click(function() {
+	$(document.body).on('click','.update',function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
@@ -151,7 +186,7 @@
 			}
 		});
 	})
-	$('.delete').click(function() {
+	$(document.body).on('click','.delete',function() {
 		//Alert, pidiendo confirmación de borrado con botón
 		confirm('Pero tú ya sabes lo que haces')
 		let id = $(this).parent().parent().attr('id')
@@ -175,11 +210,11 @@
 							<td contenteditable="false">${response[jsonObject]['description']}</td>
 							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button></td>
 						<td><button class="delete bg-red-400">Borra</button></td>
-						</tr>`)
+						</tr>`);
 			}
 		});
 	})
-	$('.delete').click(function() {
+	$(document.body).on('click','.delete',function() {
 		//Alert, pidiendo confirmación de borrado con botón
 		let userDecision = confirm('Pero tú ya sabes lo que haces?')
 		if (userDecision == true) {

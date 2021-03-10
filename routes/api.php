@@ -21,34 +21,36 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Two routes for mockup
 
-Route::get('/test', function (Request $request) {
+Route::get('/admin/dashboard/cursos', function (Request $request) {
 	return response()->json(
 		Career::all()
 		);
 });
 
-Route::post('/test', function (Request $request) {
+Route::post('/admin/dashboard/cursos', function (Request $request) {
 	$action= $request->action;
 	$message="invalid action";
+	//var_dump($request->id);
         //TODO: change the key array
     //$dataArray=json_decode($request->array,true);
     if($action=='delete'){
-
+    		var_dump($request->id);
             Career::find($request->id)->delete();
             $message="Register deleted succesfully";
 
     }else if($action=='create'){
     		$createArray=$request->result;
-    	    $id=(int)$createArray[0]["id"];
-    	    $name=$createArray[1]["name"];
-    	    $code=$createArray[2]["code"];
-    	    $desc=$createArray[3]["description"];
+    	    
+    	    $name=$createArray[0]["name"];
+    	    $code=$createArray[1]["code"];
+    	    
+    	    $desc=$createArray[2]["description"];
 
     		Career::create([
                 'term_id'=>1,
                 'name'=>$name,
                 'code'=>$code,
-                'description'=>$description,
+                'description'=>$desc,
                
             ]);
             

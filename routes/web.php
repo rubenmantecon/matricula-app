@@ -24,10 +24,7 @@ Route::get('/', function () {
 
 
 
-Route::get('/test', function () {
-    $data = Career::all();
-    return view('styletesting', ['careers' => $data]);
-});
+ 
 
 // Redirect user to admin panel or user panel according to their role
 Route::get('/dashboard', function () {
@@ -50,8 +47,11 @@ Route::get('/admin/dashboard', function () {
 })->middleware(['auth',  'can:accessAdmin'])->name('dashboard');
 
 Route::get('/admin/dashboard/cursos', function () {
-    return view('cursos');
+    $data = Career::all();
+    return view('cursos', ['careers' => $data]);
+    
 })->middleware(['auth',  'can:accessAdmin'])->name('cursos');
+
 
 Route::get('/admin/dashboard/alumnes', function () {
     return view('alumnes');
