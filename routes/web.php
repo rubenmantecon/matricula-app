@@ -23,8 +23,11 @@ Route::get('/', function () {
 });
 
 
+Route::get('/test', function () {
+	$data = Career::all();
+	return view('styletesting', ['careers' => $data]);
+});
 
- 
 
 // Redirect user to admin panel or user panel according to their role
 Route::get('/dashboard', function () {

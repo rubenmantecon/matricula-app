@@ -20,6 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Two routes for mockup
+Route::get('test',function (Request $request){
+	return response()->json(['Stoopid Cunt', 'You kinda did it']);
+});
+
+Route::post('test', function(Request $request) {
+	if ($request['action'] == 'testing') {
+		return response()->json('All good my man');
+	} else {
+		return response()->json('Not looking good, amigo');
+	}
+});
 
 Route::get('/admin/dashboard/cursos', function (Request $request) {
 	return response()->json(
