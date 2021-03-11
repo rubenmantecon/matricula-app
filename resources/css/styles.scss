@@ -1,0 +1,36 @@
+.centered-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+}
+
+.card {
+  width: 25em;
+
+  &__input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  &__button {
+    background-color: #efefef;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 33%;
+
+    &--active {
+      opacity: 0.8;
+			background-color: #4caf50;
+    }
+		&--active:hover {
+      opacity: 0.8;
+			background-color: red;
+    }
+  }
+}
