@@ -13,11 +13,12 @@ const mix = require("laravel-mix");
 
 /* For a good intro on doing some basic useful stuff, see here: https://www.larashout.com/laravel-mix */
 
-mix.js("resources/js/app.js", "public/js", [require("jquery")])
-    .js("resources/js/scripts.js", "public/js", [require("jquery")])
+mix.js("resources/js/app.js", "public/js/app.js", [require("jquery")])
     .postCss("resources/css/app.css", "public/css", [
         require("postcss-import"),
         require("tailwindcss"),
         require("autoprefixer"),
     ])
-    .css("resources/css/water.css", "public/css/app.css");
+    .css("resources/css/water.css", "public/css/app.css").sass("resources/css/styles.scss", "public/css/app.css")
+		
+    
