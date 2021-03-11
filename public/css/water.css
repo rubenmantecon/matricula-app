@@ -772,11 +772,6 @@ textarea:disabled {
   color: var(--form-placeholder);
 }
 
-::-ms-input-placeholder {
-  color: #949494;
-  color: var(--form-placeholder);
-}
-
 ::placeholder {
   color: #949494;
   color: var(--form-placeholder);
@@ -790,11 +785,6 @@ textarea:disabled {
   }
 
   :-ms-input-placeholder {
-  color: #a9a9a9;
-  color: var(--form-placeholder);
-  }
-
-  ::-ms-input-placeholder {
   color: #a9a9a9;
   color: var(--form-placeholder);
   }
@@ -1576,4 +1566,3 @@ body > footer {
   }
 }
 
-/*# sourceMappingURL=water.css.map */

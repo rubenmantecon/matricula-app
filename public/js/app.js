@@ -36215,6 +36215,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/water.css":
+/*!*********************************!*\
+  !*** ./resources/css/water.css ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -37276,7 +37289,8 @@ try {
 /******/ 		
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/app.js"],
-/******/ 			["./resources/css/app.css"]
+/******/ 			["./resources/css/app.css"],
+/******/ 			["./resources/css/water.css"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		
