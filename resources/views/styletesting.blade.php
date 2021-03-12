@@ -2,15 +2,18 @@
 <html lang="en">
 
 <head>
+	
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{ asset('js/scripts.js') }}"></script>
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+
+
 	<title>Loooreeem Ipsuuuuum </title>
 </head>
-
 <body>
 	<nav>
 		<a href="#">Home</a>
@@ -97,154 +100,79 @@
 			<th>Codi</th>
 			<th>Descripció</th>
 		</thead>
-		<tbody>
-			
-			@foreach ($careers as $career)
-			<tr id=<?php echo $career->id;  ?>>
-				<td><input type="checkbox"></td>
-				<td contenteditable="false">{{ $career->name }}</td>
-				<td contenteditable="false">{{$career->code}}</td>
-				<td contenteditable="false">{{$career->description}}</td>
-				<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-				<td><button class="delete bg-red-400">Borra</button></td>
-			</tr>
-			@endforeach
+		<script>
+			(async function(){
 
+				let response = await ajaxGET('/apitest');
+				console.log(response)
+				for (const key in response){
+					$('tbody').append(`<tr id="SomeID">
+                            <td><input type="checkbox"></td>
+                            <td  contenteditable="false">${response[key]['name']}</td>
+                            <td contenteditable="false">${response[key]['description']}</td>
+                            <td contenteditable="false">Stuff</td>
+                            <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
+                        <td><button class="delete bg-red-400">Borra</button></td>
+                        </tr>`)
+			}
+
+			})();
+		</script>
+		<tbody>
 		</tbody>
 		<tfoot>
 		</tfoot>
-		
 	</table>
-	<tr id="createCareer">
-				<button class="create">Afegeix un curs</button>
-		</tr>
+			<button id="createCareer" class="create">Afegeix un curs</button>
+			<button class="getTest">Test GET</button>
+			<button class="postTest">Test POST</button>
+			</div>
+
 </body>
 <script>
-	$(document.body).on('click','.edit',function() {
-		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
-		$(this).siblings().removeClass('hidden')
-	});
-
-	$(document.body).on('click','.create',function(){
-		if($('#createRow').length){
-
-		}else{
-			$('table').append(`<tr id="createRow">
-							<td><input type="checkbox"></td>
-							<td  contenteditable="true">Nom</td>
-							<td contenteditable="true">Codi</td>
-							<td contenteditable="true">Descripcio</td>
-							<td><button class="saveCreate">Guarda</button></td>
-							<td><button class="cancelCreate">Cancela</button></td>
-						</tr>`)
+$(function(){
+	$('.getTest').on('click', async function() {
+		let response = await ajaxGET('/apitest');
+		for (const key in response) {
+			console.log(response[key])
 		}
+	})
+	$('.postTest').on('click', async function() {
+		let response = ajaxPOST2('/apitest', {action:'testing'})
+		console.log(response)
+	})
+})
+	
+	$(document.body).on('click', '.edit', function() {
+		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
+		$(this).siblings().removeClass('hidden');
+	});
+
+	$(document.body).on('click', '.cancel', function() {
+		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
+		$(this).siblings(':not(.edit)').addClass('hidden')
+		$(this).addClass('hidden');
+	});
+	$(document.body).on('click', '.update', function() {
+		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
+		$(this).siblings(':not(.edit)').addClass('hidden')
+		$(this).addClass('hidden');
 		
-	});
-	$(document.body).on('click','.cancelCreate',function(){
-		$('#createRow').remove()
-	});
-	$(document.body).on('click','.saveCreate',function(){
-		var name_career=$("#createRow>td").eq(1).text();
-		var code_career=$("#createRow>td").eq(2).text();
-		var description_career=$("#createRow>td").eq(3).text();
-		$.post('/api/test', {
-			action: 'create',
-			result:[{name:name_career},{code:code_career},{description:description_career}] 
-		});
 	})
 
-	$(document.body).on('click','.cancel',function() {
-		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
-		$(this).siblings(':not(.edit)').addClass('hidden')
-		$(this).addClass('hidden');
-	});
-	$(document.body).on('click','.update',function() {
-		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
-		$(this).siblings(':not(.edit)').addClass('hidden')
-		$(this).addClass('hidden');
-		var id_career = $(this).parent().parent().attr('id');
-		var name_career=$('#'+id_career +">td").eq(1).text();
-		var code_career=$('#'+id_career +">td").eq(2).text();
-		var description_career=$('#'+id_career +">td").eq(3).text();
-
-		$.post('/api/test', {
-			action: 'update',
-			result:[{id:id_career},{name:name_career},{code:code_career},{description:description_career}] 
-		});
-		$('tbody').empty();
-		$.getJSON('/api/test').done(response => {
-			for (const jsonObject in response) {
-				$('table').append(`
-						<tr id="${response[jsonObject]['id']}">
-							<td><input type="checkbox"></td>
-							<td  contenteditable="false">${response[jsonObject]['name']}</td>
-							<td contenteditable="false">${response[jsonObject]['code']}</td>
-							<td contenteditable="false">${response[jsonObject]['description']}</td>
-							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-						<td><button class="delete bg-red-400">Borra</button></td>
-						</tr>`)
-			}
-		});
-	})
-	$(document.body).on('click','.delete',function() {
-		//Alert, pidiendo confirmación de borrado con botón
-		confirm('Pero tú ya sabes lo que haces')
-		let id = $(this).parent().parent().attr('id')
-		//Send id via POST to trigger deletion
-		$.post('/api/test', {
-			action: 'delete',
-			id: id
-		});
-		//Refresh view after deletion
-		$('tbody').empty();
-		$.getJSON('/api/test').done(response => {
-			for (const jsonObject in response) {
-				//Empty the whole tbody
-				//Repopulate tbody with data via GET
-				$('tbody')
-					.append(`
-						<tr id="${response[jsonObject]['id']}">
-							<td><input type="checkbox"></td>
-							<td contenteditable="false">${response[jsonObject]['name']}</td>
-							<td contenteditable="false">${response[jsonObject]['code']}</td>
-							<td contenteditable="false">${response[jsonObject]['description']}</td>
-							<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button></td>
-						<td><button class="delete bg-red-400">Borra</button></td>
-						</tr>`);
-			}
-		});
-	})
-	$(document.body).on('click','.delete',function() {
+	$(document.body).on('click', '.delete', async function() {
 		//Alert, pidiendo confirmación de borrado con botón
 		let userDecision = confirm('Pero tú ya sabes lo que haces?')
 		if (userDecision == true) {
 			let userConfirmation = prompt('Introcuce el nombre del curso');
-			if (userConfirmation == $(this).parent().parent().val()) {
-				let id = $(this).parent().parent().attr('id')
-				//Send id via POST to trigger deletion
-				$.post('/api/test', {
-					action: 'delete',
-					id: 'id'
-				});
-				//Refresh view after deletion
-				$('tbody').empty();
-				$.getJSON('/api/test').done(response => {
-					for (const jsonObject in response) {
-						//Empty the whole tbody
-						//Repopulate tbody with data via GET
-						$('tbody')
-							.append(`
-								<tr id="${response[jsonObject]['id']}">
-									<td><input type="checkbox"></td>
-									<td contenteditable="false">${response[jsonObject]['name']}</td>
-									<td contenteditable="false">${response[jsonObject]['email']}</td>
-									<td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button></td>
-								<td><button class="delete bg-red-400">Borra</button></td>
-								</tr>`)
-					}
-				});
+
+			if (userConfirmation == $(this).parent().parent().children().eq(1).text()) {
+				var id = $(this).parent().parent().attr('id');
+				ajaxPOST('/apitest');
+				
 			}
 		}
 	});
 </script>
+
 </html>

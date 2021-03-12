@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\Term;
 use App\Models\User;
 use App\Models\Career;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +25,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test', function () {
+Route::get('/styletest', function () {
 	$data = Career::all();
 	return view('styletesting', ['careers' => $data]);
 });
