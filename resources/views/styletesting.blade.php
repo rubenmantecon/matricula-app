@@ -103,7 +103,7 @@
 		<script>
 			(async function(){
 
-				let response = await ajaxGET('/apitest');
+				let response = await ajaxGET('/api/test');
 				console.log(response)
 				for (const key in response){
 					$('tbody').append(`<tr id="SomeID">
@@ -132,14 +132,15 @@
 <script>
 $(function(){
 	$('.getTest').on('click', async function() {
-		let response = await ajaxGET('/apitest');
+		let response = await ajaxGET('/api/test');
 		for (const key in response) {
 			console.log(response[key])
 		}
 	})
 	$('.postTest').on('click', async function() {
-		let response = ajaxPOST2('/apitest', {action:'testing'})
-		console.log(response)
+		/* ajaxPOST2('/api/test', {action:'testing'}).then(function(){console.log(response)}) */
+		let response = ajaxPOST('/api/test');
+		console.log(response);
 	})
 })
 	
@@ -168,7 +169,7 @@ $(function(){
 
 			if (userConfirmation == $(this).parent().parent().children().eq(1).text()) {
 				var id = $(this).parent().parent().attr('id');
-				ajaxPOST('/apitest');
+				ajaxPOST('/api/test');
 				
 			}
 		}
