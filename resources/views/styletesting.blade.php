@@ -2,18 +2,17 @@
 <html lang="en">
 
 <head>
-	
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/scripts.js') }}"></script>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-
-
-	<title>Loooreeem Ipsuuuuum </title>
+	<title>Loooreeem Ipsuuuuum</title>
 </head>
+
 <body>
 	<nav>
 		<a href="#">Home</a>
@@ -93,6 +92,7 @@
 	<hr>
 	<h1>Experimentation with Blade's capabilities and options</h1>
 	<p>Here below, I'm <code>including</code> a Laravel Blade component via the <code>include</code>directive (not working much, for now)</p>
+
 	<table>
 		<thead>
 			<th></th>
@@ -100,50 +100,25 @@
 			<th>Codi</th>
 			<th>Descripció</th>
 		</thead>
-		<script>
-			(async function(){
-
-				let response = await ajaxGET('/api/test');
-				console.log(response)
-				for (const key in response){
-					$('tbody').append(`<tr id="SomeID">
-                            <td><input type="checkbox"></td>
-                            <td  contenteditable="false">${response[key]['name']}</td>
-                            <td contenteditable="false">${response[key]['description']}</td>
-                            <td contenteditable="false">Stuff</td>
-                            <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                        <td><button class="delete bg-red-400">Borra</button></td>
-                        </tr>`)
-			}
-
-			})();
-		</script>
 		<tbody>
+			<script>
+				(async function() {
+					let response = await ajaxGET('/api/test');
+					spawnRows(response);
+				})();
+			</script>
 		</tbody>
 		<tfoot>
 		</tfoot>
 	</table>
-			<button id="createCareer" class="create">Afegeix un curs</button>
-			<button class="getTest">Test GET</button>
-			<button class="postTest">Test POST</button>
-			</div>
+	
+	<button id="createCareer" class="create">Afegeix un curs</button>
+	<button class="getTest">Test GET</button>
+	<button class="postTest">Test POST</button>
+	</div>
 
 </body>
 <script>
-$(function(){
-	$('.getTest').on('click', async function() {
-		let response = await ajaxGET('/api/test');
-		for (const key in response) {
-			console.log(response[key])
-		}
-	})
-	$('.postTest').on('click', async function() {
-		/* ajaxPOST2('/api/test', {action:'testing'}).then(function(){console.log(response)}) */
-		let response = ajaxPOST('/api/test');
-		console.log(response);
-	})
-})
-	
 	$(document.body).on('click', '.edit', function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
 		$(this).siblings().removeClass('hidden');
@@ -158,7 +133,7 @@ $(function(){
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
-		
+
 	})
 
 	$(document.body).on('click', '.delete', async function() {
@@ -170,7 +145,7 @@ $(function(){
 			if (userConfirmation == $(this).parent().parent().children().eq(1).text()) {
 				var id = $(this).parent().parent().attr('id');
 				ajaxPOST('/api/test');
-				
+
 			}
 		}
 	});
