@@ -20,7 +20,7 @@
                 <h3>Benvinguts a la plataforma per fer la matriculació del centre INS Esteve Terradas i Illa.</h3>
             </div>
             <div class="mt-10">
-                <a href="login" accesskey="l" ><button><u>L</u>ogin</button></a>
+                <a href="login" accesskey="i" ><button><u>I</u>nicia sessió</button></a>
                 <a href="" accesskey="r" ><button>Deshabilitat</button></a>
             </div>
         </div>
