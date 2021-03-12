@@ -57,9 +57,9 @@
                                 </a>
                             @endif
                             -->
-                            <x-button class="ml-3">
+                            <button>
                                 {{ __('Inicia sessió') }}
-                            </x-button>
+                            </button>
                         </div>
                     </form>
             </x-guest-layout>
