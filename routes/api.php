@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Career;
+use App\Models\Term;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Two routes for mockup
 Route::get('test',function (Request $request){
-	return response()->json(['Stoopid Cunt', 'You kinda did it']);
+	$data = Term::all();
+	return response()->json($data);
 });
 
 Route::post('test', function(Request $request) {

@@ -19,6 +19,6 @@ mix.js("resources/js/app.js", "public/js/app.js", [require("jquery")])
         require("tailwindcss"),
         require("autoprefixer"),
     ])
-    .css("resources/css/water.css", "public/css/app.css").sass("resources/css/styles.scss", "public/css/app.css")
+    .sass("resources/css/styles.scss", "public/css/app.css")
 		
     
