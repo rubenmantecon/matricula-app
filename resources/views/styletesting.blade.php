@@ -116,7 +116,9 @@
 	<button class="postTest">Test POST</button>
 	</div>
 	<div class="upload-form">
-	<button class="material-icons upload-form__button">file_upload</button>
+
+		<button class="material-icons upload-form__button">file_upload</button>
+		<button>Some button for testing</button>
 	</div>
 
 </body>
@@ -135,6 +137,12 @@
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
+		(async function() {
+
+					let response = await ajaxCall('/api/test', 'POST');
+					spawnRows(response);
+		})();
+
 
 	})
 
