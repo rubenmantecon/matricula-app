@@ -185,6 +185,7 @@
 	//Submit file button
 	$(document.body).on('click', 'label[for="submitButton"]', function() {
 		$('#fileSubmit').click();
+		$('label[for="submitButton"]').addClass('hidden');
 	});
 </script>
 
