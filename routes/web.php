@@ -69,19 +69,6 @@ Route::get('/admin/dashboard/cicles', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get("/create", function(){
-    Career::create(['term_id'=>'1', 'name' => 'test', 'code' => 'test', 'description' => 'test']);
-});
-
-Route::get("/softDelete", function(){
-    // Elimina un curso con softDelete
-    //Career::find(3)->delete();
-    // Restaura curso eliminador que le introduzcas el id
-    //Career::onlyTrashed()->find(3)->restore();
-    // Restaura todos los cursos que se hayan eliminado
-    //Career::query()->restore();
-});
-
 //Page to test logs, if you enter to this route a log will be written in the logs table
 Route::get("/log", function(){
     $user = Auth::user();
