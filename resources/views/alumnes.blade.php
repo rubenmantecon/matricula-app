@@ -23,7 +23,7 @@
     <main>
         <H1>ALUMNES</H1>
         <div> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard">Panell de controll</a> / <a href=""><b>Alumnes</b></a>
+            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Alumnes</b></a>
         </div>
     </main>
     <footer class="flex items-center text-center">
