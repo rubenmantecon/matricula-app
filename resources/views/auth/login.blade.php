@@ -26,16 +26,16 @@
 
                         <!-- Email Address -->
                         <div>
-                            <x-label for="email" :value="__('Email')" />
+                            <label for="email" :value="__('Email')" class="text-white">Usuari</label>
 
-                            <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                            <input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
                         </div>
 
                         <!-- Password -->
                         <div class="mt-4">
-                            <x-label for="password" :value="__('Password')" />
+                            <label for="password" :value="__('Password')" class="text-white">Contraseña</label>
 
-                            <x-input id="password" class="block mt-1 w-full"
+                            <input id="password" class="block mt-1 w-full"
                                             type="password"
                                             name="password"
                                             required autocomplete="current-password" />
@@ -57,9 +57,9 @@
                                 </a>
                             @endif
                             -->
-                            <x-button class="ml-3">
+                            <button>
                                 {{ __('Inicia sessió') }}
-                            </x-button>
+                            </button>
                         </div>
                     </form>
             </x-guest-layout>

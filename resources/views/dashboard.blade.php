@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">    
 	<title>Panell de control</title>
 </head>
 <body>
@@ -21,10 +22,10 @@
         </div>
     </header>
     <main>
-        <H1>PANELL DE CONTROLL</H1>
+        <H1>PANELL DE CONTROL</H1>
 
         <div> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard"><b>Panell de controll</b></a>
+            <a href="/">Inici</a> / <a href="/dashboard"><b>Panell de control</b></a>
         </div>
     </main>
     <footer class="flex items-center text-center">
