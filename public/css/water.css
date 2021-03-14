@@ -1269,6 +1269,15 @@ tbody tr:nth-child(even) {
   background-color: var(--background);
 }
 
+tbody td:nth-child(even) .delete {
+  background-color:rgba(248, 113, 113, var(--tw-bg-opacity))
+}
+
+tbody td:nth-child(even) .delete:hover {
+  background-color: orangered;
+  color: white;
+}
+
 @media (prefers-color-scheme: dark) {
 
   tbody tr:nth-child(even) {

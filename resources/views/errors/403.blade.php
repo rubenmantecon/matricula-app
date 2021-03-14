@@ -9,12 +9,17 @@
     <title>403 Forbidden</title>
 </head>
 <body>
-    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-        Tanca sessió
-    </a>    
-    <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-        {{ csrf_field() }}
-    </form>
-    <H2>403 Forbidden | NO TENS AUTORITZACIÓ</H2>
+    <main class="flex items-center text-center">
+        <div class="center full">
+            <div class="center">
+                <h2>403 Forbidden | NO TENS AUTORITZACIÓ</h2>
+            </div>
+        </div>
+    </main>
+    <footer class="flex items-center text-center">
+        <div class="full">
+            <p>© IES Esteve Terradas i Illa</p>
+        </div>
+    </footer>
 </body>
 </html>
