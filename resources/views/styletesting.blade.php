@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +13,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Loooreeem Ipsuuuuum</title>
 </head>
+
 <body>
 	<nav>
 		<a href="#">Home</a>
@@ -110,41 +112,55 @@
 		<tfoot>
 		</tfoot>
 	</table>
-		<button id="createCareer" class="create">Afegeix un curs</button>
+	<button id="createCareer" class="create">Afegeix un curs</button>
 	<button class="getTest">Test GET</button>
 	<button class="postTest">Test POST</button>
 	</div>
+	<!-- Brief explanation of this whole bunch of buttons -->
+	<!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stilable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
 	<div class="upload-form">
-
-		<button class="material-icons upload-form__button">file_upload</button>
-		<button>Some button for testing</button>
+		<label for="upload" class="hidden">
+			<input type="file" name="upload" id="fileUpload">
+		</label>
+		<label class="hidden" for="fileSubmit">
+			<input type="submit" value="fileSubmit">
+		</label>
+		<label for="uploadButton">
+			<button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
+		</label>
+		<label class="hidden" for="submitButton">
+			<button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
+		</label>
 	</div>
 
 </body>
 <script>
+	/* Table buttons functionality */
+	//Edit button
 	$(document.body).on('click', '.edit', function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
 		$(this).siblings().removeClass('hidden');
 	});
 
+	//Cancel button
 	$(document.body).on('click', '.cancel', function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
 	});
+
+	//Save changes button
 	$(document.body).on('click', '.update', function() {
 		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
 		(async function() {
-
-					let response = await ajaxCall('/api/test', 'POST');
-					spawnRows(response);
+			let response = await ajaxCall('/api/test', 'POST');
+			spawnRows(response);
 		})();
-
-
 	})
 
+	//Delete row button
 	$(document.body).on('click', '.delete', async function() {
 		//Alert, pidiendo confirmación de borrado con botón
 		let userDecision = confirm('Pero tú ya sabes lo que haces?')
@@ -157,6 +173,18 @@
 
 			}
 		}
+	});
+
+	/* Upload process' buttons functionality */
+	//Upload file button
+	$(document.body).on('click', '.upload-form__upload-button', function() {
+		$('#fileUpload').click();
+		$('label[for="submitButton"]').removeClass('hidden')
+	});
+
+	//Submit file button
+	$(document.body).on('click', 'label[for="submitButton"]', function() {
+		$('#fileSubmit').click();
 	});
 </script>
 
