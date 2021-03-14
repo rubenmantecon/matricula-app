@@ -1,38 +1,52 @@
 async function ajaxGET(url) {
-    let response = await fetch(url);
-    response = await response.json();
-    return response;
+	let response = await fetch(url);
+	response = await response.json();
+	return response;
 }
 
 async function ajaxPOST(url, data = { action: "testing" }) {
-    let response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    response = await response.json();
-    return response;
+	let response = await fetch(url, {
+		method: "POST",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	response = await response.json();
+	return response;
 }
+
+async function ajaxCall(url, verb, data) {
+	let response = await fetch(url, {
+		method: verb,
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
+	response = await response.json();
+	return response;
+}
+
 function ajaxPOST2(url, data = { action: "testing" }) {
-    $.post(url, {
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        body: data,
-        contentType: "application/json",
-        dataType: "json",
-    }).then(function (response) {
-        console.log(`This is the response from the endpoint: ${response}`);
-        console.log("ajaxPOST2 has finished");
-    });
+	$.post(url, {
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+		},
+		body: data,
+		contentType: "application/json",
+		dataType: "json",
+	}).then(function (response) {
+		console.log(`This is the response from the endpoint: ${response}`);
+		console.log("ajaxPOST2 has finished");
+	});
 }
 
 function spawnRows(json) {
-    for (const key in json) {
-        $("tbody").append(`<tr id="SomeID">
+	for (const key in json) {
+		$("tbody").append(`<tr id="SomeID">
 				<td>
 					<input type="checkbox">
 				</td>
@@ -47,5 +61,5 @@ function spawnRows(json) {
 					<button class="delete bg-red-400">Borra</button>
 				</td>
 				</tr>`);
-    }
+	}
 }

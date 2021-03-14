@@ -103,7 +103,7 @@
 		<tbody>
 			<script>
 				(async function() {
-					let response = await ajaxGET('/api/test');
+					let response = await ajaxCall('/api/test', 'GET');
 					spawnRows(response);
 				})();
 			</script>
@@ -111,10 +111,12 @@
 		<tfoot>
 		</tfoot>
 	</table>
-	
-	<button id="createCareer" class="create">Afegeix un curs</button>
+		<button id="createCareer" class="create">Afegeix un curs</button>
 	<button class="getTest">Test GET</button>
 	<button class="postTest">Test POST</button>
+	</div>
+	<div class="upload-form">
+	<button class="material-icons upload-form__button">file_upload</button>
 	</div>
 
 </body>
