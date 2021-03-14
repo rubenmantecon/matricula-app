@@ -19,7 +19,8 @@ class CreaTaulaCurso extends Migration
             $table->timestamp("end")->nullable();
             $table->string("name");
             $table->longText("description");
-            $table->boolean("active");
+            $table->timestamps();
+            $table->softDeletes();
         });
         Schema::create('careers', function (Blueprint $table) {
             $table->id();
@@ -138,7 +139,9 @@ class CreaTaulaCurso extends Migration
     public function down()
     {
         
-        Schema::dropIfExists('terms');
+        Schema::dropIfExists('terms', function(Blueprint $table){
+            $table->dropSoftDeletes();
+        });
 
         Schema::table("careers", function(Blueprint $table){
             $table->dropColumn('term_id');
