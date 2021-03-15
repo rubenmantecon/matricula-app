@@ -57,10 +57,15 @@ Route::get('/admin/dashboard/cursos', function () {
     
 })->middleware(['auth',  'can:accessAdmin'])->name('cursos');
 
-
 Route::get('/admin/dashboard/alumnes', function () {
     return view('alumnes');
-})->middleware(['auth',  'can:accessAdmin'])->name('alumnes ');
+})->middleware(['auth',  'can:accessAdmin'])->name('alumnes');
+
+Route::get('/admin/dashboard/cicles', function () {
+    $data = Term::all();
+    return view('cicles', ['terms' => $data]);
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('cicles');
 
 require __DIR__ . '/auth.php';
 

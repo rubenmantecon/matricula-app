@@ -24,7 +24,7 @@
     <main>
         <H1>CURSOS</H1>
         <div> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard">Panell de controll</a> / <a href=""><b>Cursos</b></a>
+            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Cursos</b></a>
         </div>
         <table>
         <thead>

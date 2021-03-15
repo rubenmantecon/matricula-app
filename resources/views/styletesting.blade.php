@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 
 <head>
 	<meta charset="UTF-8">
@@ -112,8 +112,8 @@
 			<script>
 				//TODO: Abstract this into a refresh view function
 				(async function() {
-					let response = await ajaxCall('/api/test', 'GET');
-					spawnRows(response);
+					let response = await ajaxCall('/api/test', 'POST', data = {action: 'Say Hi'});
+					console.log(response)
 				})();
 			</script>
 		</tbody>
@@ -144,7 +144,7 @@
 </body>
 <script>
 	const toggleSwitch = document.querySelector('.theme-switcher__switch input[type="checkbox"]');
-
+	
 	function switchTheme(e) {
 		if (e.target.checked) {
 			document.documentElement.setAttribute('data-theme', 'dark');
@@ -154,7 +154,6 @@
 	}
 
 	toggleSwitch.addEventListener('change', switchTheme, false);
-
 
 	/* Table buttons functionality */
 	//Edit button

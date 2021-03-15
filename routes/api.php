@@ -38,6 +38,12 @@ Route::get('/admin/dashboard/cursos', function (Request $request) {
 		);
 });
 
+Route::get('/admin/dashboard/cicles', function (Request $request) {
+	return response()->json(
+		Term::all()
+		);
+});
+
 Route::post('/admin/dashboard/cursos', function (Request $request) {
 	$action= $request->action;
 	$message="invalid action";
@@ -61,11 +67,8 @@ Route::post('/admin/dashboard/cursos', function (Request $request) {
                 'term_id'=>1,
                 'name'=>$name,
                 'code'=>$code,
-                'description'=>$desc,
-               
+                'description'=>$desc,             
             ]);
-            
-
     }
     else if($action=='update'){
     	    $dataArray=$request->result;
@@ -77,6 +80,50 @@ Route::post('/admin/dashboard/cursos', function (Request $request) {
     		Career::where('id',$id)->update(['name' => $name]);
     		Career::where('id',$id)->update(['code' => $code]);
     		Career::where('id',$id)->update(['description' => $desc]);
+			
+            $message="Register updated succesfully";
+
+    }
+	return response()->json($message);
+
+});
+
+Route::post('/admin/dashboard/cicles', function (Request $request) {
+	$action= $request->action;
+	$message="invalid action";
+	//var_dump($request->id);
+        //TODO: change the key array
+    //$dataArray=json_decode($request->array,true);
+    if($action=='delete'){
+    		var_dump($request->id);
+            Term::find($request->id)->delete();
+            $message="Register deleted succesfully";
+    }else if($action=='create'){
+    		$createArray=$request->result;
+    	    $start=$createArray[0]["start"];
+    	    $end=$createArray[1]["end"];
+    	    $name=$createArray[2]["name"];
+			$description=$createArray[3]["description"];
+
+    		Term::create([
+                'start'=>$start,
+				'end'=>$end,
+				'name'=>$name,
+                'description'=>$description
+            ]);
+    }
+    else if($action=='update'){
+    	    $dataArray=$request->result;
+    	    $id=(int)$dataArray[0]["id"];
+    	    $start=$dataArray[1]["start"];
+    	    $end=$dataArray[2]["end"];
+    	    $name=$dataArray[3]["name"];
+			$description=$dataArray[4]["description"];
+    	  
+			Term::where('id',$id)->update(['start' => $start]);
+    		Term::where('id',$id)->update(['end' => $end]);
+    		Term::where('id',$id)->update(['name' => $name]);
+    		Term::where('id',$id)->update(['description' => $description]);
 			
             $message="Register updated succesfully";
 
