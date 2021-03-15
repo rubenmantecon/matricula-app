@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/scripts.js') }}"></script>
@@ -22,6 +21,14 @@
 		<a href="#">Contact Us</a>
 	</nav>
 	<h1>Testing of classless styling</h1>
+
+	<div class="theme-switcher">
+		<label class="theme-switcher__switch" for="checkbox">
+			<input type="checkbox" id="checkbox" />
+			<div class="theme-switcher__slider"></div>
+		</label>
+	</div>
+
 	<h2>Kitchen Sink</h2>
 	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
 
@@ -103,6 +110,7 @@
 		</thead>
 		<tbody>
 			<script>
+				//TODO: Abstract this into a refresh view function
 				(async function() {
 					let response = await ajaxCall('/api/test', 'GET');
 					spawnRows(response);
@@ -117,7 +125,7 @@
 	<button class="postTest">Test POST</button>
 	</div>
 	<!-- Brief explanation of this whole bunch of buttons -->
-	<!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stilable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
+	<!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stylable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
 	<div class="upload-form">
 		<label for="upload" class="hidden">
 			<input type="file" name="upload" id="fileUpload">
@@ -135,6 +143,19 @@
 
 </body>
 <script>
+	const toggleSwitch = document.querySelector('.theme-switcher__switch input[type="checkbox"]');
+
+	function switchTheme(e) {
+		if (e.target.checked) {
+			document.documentElement.setAttribute('data-theme', 'dark');
+		} else {
+			document.documentElement.setAttribute('data-theme', 'light');
+		}
+	}
+
+	toggleSwitch.addEventListener('change', switchTheme, false);
+
+
 	/* Table buttons functionality */
 	//Edit button
 	$(document.body).on('click', '.edit', function() {
@@ -165,13 +186,20 @@
 		//Alert, pidiendo confirmación de borrado con botón
 		let userDecision = confirm('Pero tú ya sabes lo que haces?')
 		if (userDecision == true) {
+			/* TODO: Lo que tiene que pasar:
+			POST a un endpoint que recibe el nombre de la columna y el id
+			El endpoint me devuelve una nueva vista (estando en la misma ruta aún): una página en blanco con un modal que me pida confirmación del texto de la columna previamente enviado por POST. Se guarda el id para posterior delete (?). Una vez introducido el nombre, desde ese modal se hace un HTTP DELETE al mismo endpoint, usando el id. Se redirige al mismo endpoint, por GET.
+			*/
+			/* let careerName = $(this).parent().parent().children().eq(1).text();
+			let showModal = await ajaxCall('styletest', 'POST', {data: careerName})
+			
 			let userConfirmation = prompt('Introcuce el nombre del curso');
 
-			if (userConfirmation == $(this).parent().parent().children().eq(1).text()) {
+			if (userConfirmation == careerName) {
 				var id = $(this).parent().parent().attr('id');
 				ajaxPOST('/api/test');
 
-			}
+			} */
 		}
 	});
 
@@ -186,6 +214,7 @@
 	$(document.body).on('click', 'label[for="submitButton"]', function() {
 		$('#fileSubmit').click();
 		$('label[for="submitButton"]').addClass('hidden');
+		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
 	});
 </script>
 
