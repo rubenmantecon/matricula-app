@@ -47,5 +47,20 @@ footer {
   -moz-osx-font-smoothing: grayscale;
 }
 
+tbody td:nth-child(even) .delete {
+    background-color:rgba(248, 113, 113, var(--tw-bg-opacity))
+}
 
+tbody td:nth-child(even) .delete:hover {
+background-color: orangered;
+color: white;
+}
 
+tbody td:nth-child .delete {
+    background-color:rgba(248, 113, 113, var(--tw-bg-opacity))
+}
+
+tbody td:nth-child .delete:hover {
+background-color: orangered;
+color: white;
+}

@@ -33,6 +33,9 @@
             <a href="/admin/dashboard/alumnes">
                 <button>ALUMNES</button>
             </a>
+            <a href="/admin/dashboard/cicles">
+                <button>CICLES</button>
+            </a>
         </div>
     </main>
     <footer class="flex items-center text-center">
