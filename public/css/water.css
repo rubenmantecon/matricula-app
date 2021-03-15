@@ -1199,6 +1199,7 @@ tbody td:nth-child(even) .delete:hover {
 	color: white;
 }
 
+
 @media (prefers-color-scheme: dark) {
 	tbody tr:nth-child(even) {
 		background-color: #161f27;

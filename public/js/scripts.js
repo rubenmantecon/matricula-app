@@ -8,6 +8,7 @@ async function ajaxPOST(url, data = { action: "testing" }) {
 	let response = await fetch(url, {
 		method: "POST",
 		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
 			"Accept": "application/json",
 			"Content-Type": "application/json",
 		},

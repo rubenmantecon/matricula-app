@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
@@ -127,8 +128,8 @@
 			<script>
 				//TODO: Abstract this into a refresh view function
 				(async function() {
-					let response = await ajaxCall('/api/test', 'POST', data = {action: 'Say Hi'});
-					console.log(response)
+					let response = await ajaxCall('/api/test', 'GET');
+					spawnRows(response);
 				})();
 			</script>
 		</tbody>
@@ -159,7 +160,7 @@
 </body>
 <script>
 	const toggleSwitch = document.querySelector('.theme-switcher__switch input[type="checkbox"]');
-	
+
 	function switchTheme(e) {
 		if (e.target.checked) {
 			document.documentElement.setAttribute('data-theme', 'dark');
@@ -171,15 +172,25 @@
 	toggleSwitch.addEventListener('change', switchTheme, false);
 
 	/* Table buttons functionality */
+	let rowTextValues = [];
+	let isBeingEdited = false;
 	//Edit button
 	$(document.body).on('click', '.edit', function() {
-		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
+		isBeingEdited = true;
+		let rowElements = $(this).parent().siblings('td[contenteditable]')
+		let cancelButtonOfRow = $(this).parent().siblings('.cancel')
+		rowElements.prop('contenteditable', 'true');
 		$(this).siblings().removeClass('hidden');
-	});
+		rowElements.each(function(index, elem) {
+			rowTextValues.push(elem.innerHTML);
+		})
+		
 
+	});
 	//Cancel button
 	$(document.body).on('click', '.cancel', function() {
-		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
+		let rowElements = $(this).parent().siblings('td[contenteditable]')
+		rowElements.prop('contenteditable', 'false');
 		$(this).siblings(':not(.edit)').addClass('hidden')
 		$(this).addClass('hidden');
 	});
