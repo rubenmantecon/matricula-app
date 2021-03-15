@@ -40,8 +40,7 @@ Route::get('/admin/dashboard/cursos', function (Request $request) {
 
 Route::get('/admin/dashboard/cicles', function (Request $request) {
 	return response()->json(
-		Term::all()
-		);
+		Term::all());
 });
 
 Route::post('/admin/dashboard/cursos', function (Request $request) {

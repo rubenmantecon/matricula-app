@@ -8,17 +8,25 @@
     <link rel="stylesheet" href="{{ asset('css/water.css') }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
     <script src="{{ asset('js/app.js') }}"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <title>Cicles</title>
 </head>
 <body>
     <header>
-        <div class="flex flex-row-reverse"> <!-- LOG OUT -->
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                Tanca sessió
-            </a>    
-            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
+        <div class="flex"> <!-- LOG OUT -->
+            <div class="flex-1">
+                <img width="75px" src="{{ asset('/img/icon.png') }}">
+            </div>
+            <div class="flex-2">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                    Tanca sessió
+                </a>    
+                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </div>
         </div>
     </header>
     <main>
@@ -27,55 +35,54 @@
             <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Cicles</b></a>
         </div>
         <table>
-            <thead>
-                <th></th>
-                <th>Data inici</th>
-                <th>Data fi</th>
-                <th>Nom</th>
-                <th>Descripció</th>
-            </thead>
-            <tbody>
-                
-                @foreach ($terms as $term)
-                <tr id=<?php echo $term->id;  ?>>
-                    <td><input type="checkbox"></td>
-                    <td contenteditable="false">{{ $term->start }}</td>
-                    <td contenteditable="false">{{$term->end}}</td>
-                    <td contenteditable="false">{{$term->name}}</td>
-                    <td contenteditable="false">{{$term->description}}</td>
-                    <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                    <td><button class="delete bg-red-400">Borra</button></td>
-                </tr>
-                @endforeach
-
-            </tbody>
-            <tfoot>
-            </tfoot>
-            <tr id="createTerm">
-                <button class="create">Afegeix un curs</button>
+        <thead>
+            <th></th>
+            <th>Data inici</th>
+            <th>Data fi</th>
+            <th>Nom</th>
+            <th>Descripció</th>
+        </thead>
+        <tbody>
+            @foreach ($terms as $term)
+            <tr id=<?php echo $term->id;  ?>>
+                <td><input type="checkbox"></td>
+                <td contenteditable="false">{{ $term->start }}</td>
+                <td contenteditable="false">{{$term->end}}</td>
+                <td contenteditable="false">{{$term->name}}</td>
+                <td contenteditable="false">{{$term->description}}</td>
+                <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
+                <td><button class="delete bg-red-400">Borra</button></td>
             </tr>
-            
-        </table>
-        <div class="upload-form">
-            <label for="upload" class="hidden">
-                <input type="file" name="upload" id="fileUpload">
-            </label>
-            <label class="hidden" for="fileSubmit">
-                <input type="submit" value="fileSubmit">
-            </label>
-            <label for="uploadButton">
-                <button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
-            </label>
-            <label class="hidden" for="submitButton">
-                <button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
-            </label>
-        </div>
-    </main>
+            @endforeach
+        </tbody>
+        <tfoot>
+        </tfoot>
+        
+    </table>
+    <tr id="createTerm">
+        <button class="create">Afegeix un curs</button>
+    </tr>
+    <!-- Brief explanation of this whole bunch of buttons -->
+	<!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stylable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
+	<div class="upload-form">
+		<label for="upload" class="hidden">
+			<input type="file" name="upload" id="fileUpload">
+		</label>
+		<label class="hidden" for="fileSubmit">
+			<input type="submit" value="fileSubmit">
+		</label>
+		<label for="uploadButton">
+			<button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
+		</label>
+		<label class="hidden" for="submitButton">
+			<button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
+		</label>
+	</div>
 </body>
 <script>
     $(document.body).on('click','.edit',function() {
         $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
-        $(this).siblings().removeClass('hidden')
+        $(this).siblings().removeClass('hidden');
     });
 
     $(document.body).on('click','.create',function(){
@@ -84,7 +91,7 @@
         }else{
             $('tbody').append(`<tr id="createRow">
                             <td><input type="checkbox"></td>
-                            <td contenteditable="true">Data inici</td>
+                            <td contenteditable="true"><input /></td>
                             <td contenteditable="true">Data fi</td>
                             <td contenteditable="true">Nom</td>
                             <td contenteditable="true">Descripcio</td>
@@ -210,8 +217,8 @@
 	$(document.body).on('click', 'label[for="submitButton"]', function() {
 		$('#fileSubmit').click();
 		$('label[for="submitButton"]').addClass('hidden');
+		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
 	});
-
 </script>
     </main>
     <footer class="flex items-center text-center">

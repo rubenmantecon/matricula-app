@@ -12,13 +12,18 @@
 </head>
 <body>
     <header>
-        <div class="flex flex-row-reverse"> <!-- LOG OUT -->
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                Tanca sessió
-            </a>    
-            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
+        <div class="flex"> <!-- LOG OUT -->
+            <div class="flex-1">
+                <img width="75px" src="{{ asset('/img/icon.png') }}">
+            </div>
+            <div class="flex-2">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                    Tanca sessió
+                </a>    
+                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </div>
         </div>
     </header>
     <main>
