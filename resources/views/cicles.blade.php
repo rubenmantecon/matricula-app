@@ -27,35 +27,50 @@
             <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Cicles</b></a>
         </div>
         <table>
-        <thead>
-            <th></th>
-            <th>Data inici</th>
-            <th>Data fi</th>
-            <th>Nom</th>
-            <th>Descripció</th>
-        </thead>
-        <tbody>
-            
-            @foreach ($terms as $term)
-            <tr id=<?php echo $term->id;  ?>>
-                <td><input type="checkbox"></td>
-                <td contenteditable="false">{{ $term->start }}</td>
-                <td contenteditable="false">{{$term->end}}</td>
-                <td contenteditable="false">{{$term->name}}</td>
-                <td contenteditable="false">{{$term->description}}</td>
-                <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                <td><button class="delete bg-red-400">Borra</button></td>
-            </tr>
-            @endforeach
+            <thead>
+                <th></th>
+                <th>Data inici</th>
+                <th>Data fi</th>
+                <th>Nom</th>
+                <th>Descripció</th>
+            </thead>
+            <tbody>
+                
+                @foreach ($terms as $term)
+                <tr id=<?php echo $term->id;  ?>>
+                    <td><input type="checkbox"></td>
+                    <td contenteditable="false">{{ $term->start }}</td>
+                    <td contenteditable="false">{{$term->end}}</td>
+                    <td contenteditable="false">{{$term->name}}</td>
+                    <td contenteditable="false">{{$term->description}}</td>
+                    <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
+                    <td><button class="delete bg-red-400">Borra</button></td>
+                </tr>
+                @endforeach
 
-        </tbody>
-        <tfoot>
-        </tfoot>
-        
-    </table>
-    <tr id="createTerm">
+            </tbody>
+            <tfoot>
+            </tfoot>
+            <tr id="createTerm">
                 <button class="create">Afegeix un curs</button>
-        </tr>
+            </tr>
+            
+        </table>
+        <div class="upload-form">
+            <label for="upload" class="hidden">
+                <input type="file" name="upload" id="fileUpload">
+            </label>
+            <label class="hidden" for="fileSubmit">
+                <input type="submit" value="fileSubmit">
+            </label>
+            <label for="uploadButton">
+                <button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
+            </label>
+            <label class="hidden" for="submitButton">
+                <button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
+            </label>
+        </div>
+    </main>
 </body>
 <script>
     $(document.body).on('click','.edit',function() {
@@ -183,6 +198,20 @@
             }
         }
     });
+
+    /* Upload process' buttons functionality */
+	//Upload file button
+	$(document.body).on('click', '.upload-form__upload-button', function() {
+		$('#fileUpload').click();
+		$('label[for="submitButton"]').removeClass('hidden')
+	});
+
+	//Submit file button
+	$(document.body).on('click', 'label[for="submitButton"]', function() {
+		$('#fileSubmit').click();
+		$('label[for="submitButton"]').addClass('hidden');
+	});
+
 </script>
     </main>
     <footer class="flex items-center text-center">
