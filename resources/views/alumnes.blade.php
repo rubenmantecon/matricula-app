@@ -11,19 +11,57 @@
 </head>
 <body>
     <header>
-        <div class="flex flex-row-reverse"> <!-- LOG OUT -->
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                Tanca sessió
-            </a>    
-            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
+        <div class="flex"> <!-- LOG OUT -->
+            <div class="flex-1">
+                <img width="75px" src="{{ asset('/img/icon.png') }}">
+            </div>
+            <div class="flex-2">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                    Tanca sessió
+                </a>    
+                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </div>
         </div>
     </header>
     <main>
         <H1>ALUMNES</H1>
         <div> <!-- fil d'ariadna -->
             <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Alumnes</b></a>
+        </div>
+        <table>
+            <tr>   
+                <th>Nom</th>
+                <th>Correu electrònic</th>
+            </tr>
+            @foreach ($alumnes as $alumne)
+                <tr>   
+                    @if ($alumne->role == "user")
+                    <td>{{$alumne->name}}</td>
+                    <td>{{$alumne->email}}</td>
+                    @endif
+                </tr>
+            @endforeach
+        </table>
+        <div class="">
+            {!! $alumnes->links() !!}
+        </div>
+        <!-- Brief explanation of this whole bunch of buttons -->
+        <!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stylable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
+        <div class="upload-form">
+            <label for="upload" class="hidden">
+                <input type="file" name="upload" id="fileUpload">
+            </label>
+            <label class="hidden" for="fileSubmit">
+                <input type="submit" value="fileSubmit">
+            </label>
+            <label for="uploadButton">
+                <button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
+            </label>
+            <label class="hidden" for="submitButton">
+                <button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
+            </label>
         </div>
     </main>
     <footer class="flex items-center text-center">
@@ -32,4 +70,19 @@
         </div>
     </footer>
 </body>
+<script>
+    /* Upload process' buttons functionality */
+	//Upload file button
+	$(document.body).on('click', '.upload-form__upload-button', function() {
+		$('#fileUpload').click();
+		$('label[for="submitButton"]').removeClass('hidden')
+	});
+
+	//Submit file button
+	$(document.body).on('click', 'label[for="submitButton"]', function() {
+		$('#fileSubmit').click();
+		$('label[for="submitButton"]').addClass('hidden');
+		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
+	});
+</script>
 </html>
