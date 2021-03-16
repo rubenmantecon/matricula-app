@@ -136,9 +136,9 @@
 		<tfoot>
 		</tfoot>
 	</table>
-	<button id="createCareer" class="create">Afegeix un curs</button>
+<!-- 	<button id="createCareer" class="create">Afegeix un curs</button>
 	<button class="getTest">Test GET</button>
-	<button class="postTest">Test POST</button>
+	<button class="postTest">Test POST</button> -->
 	</div>
 	<!-- Brief explanation of this whole bunch of buttons -->
 	<!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stylable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
