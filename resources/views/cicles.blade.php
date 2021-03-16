@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/water.css') }}">
@@ -65,12 +66,15 @@
     <!-- Brief explanation of this whole bunch of buttons -->
 	<!-- Input buttons are really hard to style. So we put the input buttons, hide them, and show some easily stylable buttons. These buttons receive clicks, and when receiving them, through jQuery, simulate a click on the inputs. -->
 	<div class="upload-form">
+        <form>
 		<label for="upload" class="hidden">
 			<input type="file" name="upload" id="fileUpload">
 		</label>
+        
 		<label class="hidden" for="fileSubmit">
 			<input type="submit" value="fileSubmit">
 		</label>
+        </form>
 		<label for="uploadButton">
 			<button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
 		</label>
@@ -78,6 +82,9 @@
 			<button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
 		</label>
 	</div>
+    <form style="display:none" method="POST" id="hiddenForm" action="{{route('importCicles')}}">
+            @csrf
+    </form>
 </body>
 <script>
     var pulse = 0;
@@ -237,15 +244,60 @@
 	//Upload file button
 	$(document.body).on('click', '.upload-form__upload-button', function() {
 		$('#fileUpload').click();
-		$('label[for="submitButton"]').removeClass('hidden')
+		$('label[for="submitButton"]').removeClass('hidden');
+
+
 	});
 
-	//Submit file button
-	$(document.body).on('click', 'label[for="submitButton"]', function() {
-		$('#fileSubmit').click();
-		$('label[for="submitButton"]').addClass('hidden');
-		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
-	});
+    //Detecting when the file is uploaded so we can do the request
+    $(document.body).on('change','#fileUpload',function(){
+        $('#fileSubmit').trigger('click');
+        $('label[for="submitButton"]').addClass('hidden');
+        loadData(importDone);
+
+    })
+  
+    function loadData(actionFunc){
+        var formData= new FormData();
+        formData.append('file',$("input[type=file]")[0].files[0]);
+                console.log(formData);
+
+        //var formData= new FormData(document.getElementById("file"));
+        $.ajax({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'POST',
+            url:'/admin/dashboard/cicles',
+            //data: JSON.stringify(data),
+            data:formData,
+            contentType:false,
+            processData:false,
+        }).done(
+            function(data){actionFunc(data)}
+        ).fail(
+            function(jqXHR,textStatus, errorThrown){
+                    
+                    errorFunction(textStatus,errorThrown);
+                }
+        )
+    };
+    function importDone(data){
+        var input;
+        var value;
+        for (var i = 1; i < data.length; i++) {
+            $('#hiddenForm').append('<input type="hidden" name="data'+i+'">');
+            value=JSON.stringify(data[i]);
+            $('input[name="data'+i+'"]').val(value);
+           
+        }
+        $('#hiddenForm').submit();
+    }
+    function errorFunction (jqXHR,textStatus,errorThrown){
+        alert("Algo ha ido mal : "+ textStatus + errorThrown);
+    };
+    
+
 </script>
     </main>
     <footer class="flex items-center text-center">

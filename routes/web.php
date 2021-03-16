@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Career;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\TestResponse;
+use App\Imports\TermsImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 //use Log;
 
 /*
@@ -62,10 +65,76 @@ Route::get('/admin/dashboard/alumnes', function () {
     return view('alumnes', ['alumnes' => $data]);
 })->middleware(['auth',  'can:accessAdmin'])->name('alumnes');
 
+
+
 Route::get('/admin/dashboard/cicles', function () {
     $data = Term::all();
     return view('cicles', ['terms' => $data]);
 })->middleware(['auth',  'can:accessAdmin'])->name('cicles');
+
+Route::get('/admin/dashboard/cicles/import', function () {
+    $data = Term::all();
+    return view('importCicles', ['terms' => $data]);
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('importCicles');
+
+Route::post('/admin/dashboard/cicles', function (Request $request) {
+    //$data = Term::all();
+
+    $existingTerms=array();
+    $termsData=array();
+
+
+    $data=Excel::toArray(new TermsImport, $request->file('file'));
+    foreach ($data[0] as $term) {
+        if (!in_array($term[1],$existingTerms)) {
+            $arrayTerm=array("code"=>$term[0], "name"=>$term[1], "desc"=>"Hores: ".$term[3], "iniDate"=>$term[4],"endDate"=>$term[5]);
+            array_push($existingTerms, $term[1]);
+            array_push($termsData, $arrayTerm );
+        }
+    }
+
+    //var_dump($existingTerms);
+    return $termsData;
+    
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('cicles');
+
+Route::post('/admin/dashboard/cicles/import', function (Request $request) {
+    if ($request->ajax()) {
+        foreach ($request->result as $term) {
+            
+            $name=$term['name'];
+            //Realised that code isnt in the terms table, TODO: ask if we have to do something with it else remove from importCicles and web.
+            //$code=$term['code'];       
+            $desc=$term['desc'];
+            $iniDate=$term['iniDate'];
+            $endDate=$term['endDate'];
+
+            Term::create([
+                'term_id'=>1,
+                'start'=>$iniDate,
+                'end'=>$endDate,
+                'name'=>$name,
+                'description'=>$desc,
+                'active'=>1,
+               
+            ]);
+        }
+        
+    }else{
+
+        return view('importCicles');
+
+    }
+})->middleware(['auth',  'can:accessAdmin'])->name('importCicles');
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
 
