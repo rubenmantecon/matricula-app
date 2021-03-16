@@ -91,22 +91,6 @@
 		$('#fileUpload').click();
 	});
 
-<<<<<<< Updated upstream
-	var page = getUrlParameter('page');
-	var totalPages = {
-		{
-			$alumnes - > lastPage()
-		}
-	};
-	if (page > totalPages) {
-		window.onload = messages('error', 'No se están mostrando estudiantes, vuelva a la pagina correcta');
-	}
-	if (page) {
-		window.onload = messages('info', 'Página ' + page + ' mostrant 20 estudiants');
-	} else {
-		window.onload = messages('info', 'Página 1 mostrant 20 estudiants');
-	}
-=======
     var page = getUrlParameter('page');
     var totalPages = {{ $alumnes->lastPage() }};
     if (page > totalPages) {
@@ -135,7 +119,6 @@
             }
         }
     }
->>>>>>> Stashed changes
 
 	function messages(code, message) {
 		var structure = $("#messages");
