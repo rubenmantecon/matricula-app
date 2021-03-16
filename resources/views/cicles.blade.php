@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script defer src="{{ asset('js/day_night.js') }}"></script>
     <title>Cicles</title>
 </head>
 <body>
@@ -30,10 +31,22 @@
             </div>
         </div>
     </header>
+    <div class="flex-1" id="breadcrumb"> <!-- fil d'ariadna -->
+
     <main>
         <H1>CICLES</H1>
-        <div id="breadcrumb"> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a><b>Cicles</b></a>
+        <div class="flex">
+            <div class="flex-1" id="breadcrumb"> <!-- fil d'ariadna -->
+                <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a><b>Cicles</b></a>
+            </div>
+            <div class="theme-switcher-wrapper flex-2">
+                <div class="theme-switcher">
+                    <label class="theme-switcher__switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="theme-switcher__slider"></div>
+                    </label>
+                </div>
+            </div>
         </div>
         <div id="messages"></div>
         <table>

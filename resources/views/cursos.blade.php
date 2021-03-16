@@ -10,7 +10,6 @@
 	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script defer src="{{ asset('js/day_night.js') }}"></script>
-
 	<title>Cursos</title>
 </head>
 

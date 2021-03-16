@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
     <link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
+    <script defer src="{{ asset('js/day_night.js') }}"></script>
 	<title>Panell de control</title>
 </head>
 <body>
@@ -28,8 +29,18 @@
     </header>
     <main>
         <H1>PANELL DE CONTROL</H1>
-        <div> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard"><b>Panell de control</b></a>
+        <div class="flex" >
+            <div class="flex-1" id="breadcrumb"> <!-- fil d'ariadna -->
+                <a href="/">Inici</a> / <a href="/dashboard"><b>Panell de control</b></a>
+            </div>
+            <div class="theme-switcher-wrapper flex-2">
+                <div class="theme-switcher">
+                    <label class="theme-switcher__switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="theme-switcher__slider"></div>
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="mt-8">
             <a href="/admin/dashboard/cursos">
