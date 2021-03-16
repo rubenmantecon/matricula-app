@@ -91,7 +91,7 @@
         }else{
             $('tbody').append(`<tr id="createRow">
                             <td><input type="checkbox"></td>
-                            <td contenteditable="true"><input /></td>
+                            <td contenteditable="true">Data inici</td>
                             <td contenteditable="true">Data fi</td>
                             <td contenteditable="true">Nom</td>
                             <td contenteditable="true">Descripcio</td>
