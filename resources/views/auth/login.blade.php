@@ -33,7 +33,7 @@
 
                         <!-- Password -->
                         <div class="mt-4">
-                            <label for="password" :value="__('Password')" class="text-white">Contraseña</label>
+                            <label for="password" :value="__('Password')" class="text-white">Contrasenya</label>
 
                             <input id="password" class="block mt-1 w-full"
                                             type="password"

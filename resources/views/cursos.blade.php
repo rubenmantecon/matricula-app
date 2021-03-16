@@ -10,7 +10,6 @@
 	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script defer src="{{ asset('js/day_night.js') }}"></script>
-
 	<title>Cursos</title>
 </head>
 
@@ -32,8 +31,18 @@
     </header>
     <main>
         <H1>CURSOS</H1>
-        <div id="breadcrumb"> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a><b>Cursos</b></a>
+        <div class="flex" >
+            <div class="flex-1" id="breadcrumb"> <!-- fil d'ariadna -->
+                <a href="/"> Inici </a> / <a href="/dashboard"> Panell de control </a> / <a><b> Cursos </b></a>
+            </div>
+            <div class="theme-switcher-wrapper flex-2">
+                <div class="theme-switcher">
+                    <label class="theme-switcher__switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="theme-switcher__slider"></div>
+                    </label>
+                </div>
+            </div>
         </div>
         <div id="messages"></div>
         <table>
