@@ -49,20 +49,20 @@ footer {
   -moz-osx-font-smoothing: grayscale;
 }
 
-tbody td:nth-child(even) .delete {
+tbody td:nth-child(even) .basura {
     background-color:rgba(248, 113, 113, var(--tw-bg-opacity))
 }
 
-tbody td:nth-child(even) .delete:hover {
+tbody td:nth-child(even) .basura:hover {
 background-color: orangered;
 color: white;
 }
 
-tbody td:nth-child .delete {
+tbody td:nth-child .basura {
     background-color:rgba(248, 113, 113, var(--tw-bg-opacity))
 }
 
-tbody td:nth-child .delete:hover {
+tbody td:nth-child .basura:hover {
 background-color: orangered;
 color: white;
 }

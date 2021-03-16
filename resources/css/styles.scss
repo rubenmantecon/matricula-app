@@ -230,3 +230,19 @@ footer {
 }
 
 
+.basura {
+    background-color: rgb(248, 113, 113)
+}
+
+.basura:hover {
+	background-color: orangered;
+	color: white;
+}
+tbody tr:nth-child(even) button.basura {
+    background-color: rgb(248, 113, 113)
+}
+
+tbody tr:nth-child(even) button.basura:hover {
+	background-color: orangered;
+	color: white;
+}

@@ -51,7 +51,7 @@
                 <td id="name" contenteditable="false">{{$term->name}}</td>
                 <td contenteditable="false">{{$term->description}}</td>
                 <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                <td><button class="delete bg-red-400">Borra</button></td>
+                <td><button class=" basura  ">Borra</button></td>
             </tr>
             @endforeach
         </tbody>
@@ -144,7 +144,7 @@
                             <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
                             <td contenteditable="false">${response[jsonObject]['description']}</td>
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                        <td><button class="delete bg-red-400">Borra</button></td>
+                        <td><button class=" basura  ">Borra</button></td>
                         </tr>`)
             }
         });
@@ -188,13 +188,13 @@
                             <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
                             <td contenteditable="false">${response[jsonObject]['description']}</td>
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                            <td><button class="delete bg-red-400">Borra</button></td>
+                            <td><button class=" basura  ">Borra</button></td>
                         </tr>`)
             }
         });
     })
     
-    $(document.body).on('click','.delete',function() {
+    $(document.body).on('click','. basura',function() {
         //Alert, pidiendo confirmación de borrado con botón
         let userDecision = confirm('Pero tú ya sabes lo que haces?')
         if (userDecision == true) {
@@ -205,7 +205,7 @@
 
                 //Send id via POST to trigger deletion
                 $.post('/api/admin/dashboard/cicles', {
-                    action: 'delete',
+                    action: ' basura',
                     id: id
                 });
                 //Refresh view after deletion
@@ -222,7 +222,7 @@
                             <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
                             <td contenteditable="false">${response[jsonObject]['description']}</td>
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                        <td><button class="delete bg-red-400">Borra</button></td>
+                        <td><button class=" basura  ">Borra</button></td>
                         </tr>`)
                     }
                 });
