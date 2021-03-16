@@ -127,7 +127,7 @@ class CreaTaulaCurso extends Migration
             $table->id();
             $table->string("level");
             $table->timestamp("time");
-            $table->string("message");
+            $table->longText("message");
         });
     }
 
