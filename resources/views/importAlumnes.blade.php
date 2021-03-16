@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-	 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/water.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}"></script>
-    <title>Cursos</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <title>Alumnes</title>
     <script type="text/javascript">
     	$(document).ready(function(){
         $(document.body).on('click','#importB',function(e){
@@ -28,9 +26,8 @@
         		
         		tdData={name:name,email:email};
         		data.result.push(tdData);
-
         	});
-        	console.log(data);
+        	console.log(email);
         	loadData(importSucces,data);
         }
         function loadData(actionFunc,data){
@@ -47,18 +44,42 @@
             function(data){actionFunc(data)}
         ).fail(
             function(jqXHR,textStatus, errorThrown){
-                    
+                    deleteMSG();
+                    messages('error', "No s'ha importat correctament, potser que un usuari estigui a la base de dades");
                     errorFunction(textStatus,errorThrown);
                 }
         )
    		 };
    		function importSucces(data){
-   			alert("Import dels alumnes completat amb exit, en uns instants seras redirigit");
+            deleteMSG();
+            messages('success', "Import dels cicles completat amb exit, en uns instants seras redirigit");
    			setTimeout(function() {window.location.replace('/admin/dashboard/alumnes');
-          }, 1000);
+          }, 2500);
    		}
         
-
+        function messages(code, message) {
+            var structure = $("#messages");
+            if ($('#messages').children().length == 0) {
+                if (code == "success") {
+                    structure.addClass("mt-5 mb-5 success");
+                    structure.append("<p><b>ÉXIT! | " + message + "</b></p>")
+                } else if (code == "error") {
+                    structure.addClass("mt-5 mb-5 errorMSG");
+                    structure.append("<p><b>ERROR! | " + message + "</b></p>")
+                } else if (code == "info") {
+                    structure.addClass("mt-5 mb-5 info");
+                    structure.append("<p><b>INFO! | " + message + "</b></p>")
+                } else if (code == "warning") {
+                    structure.addClass("mt-5 mb-5 warning");
+                    structure.append("<p><b>ADVERTÈNCIA! | " + message + "</b></p>")
+                }
+            }
+        }
+        
+        function deleteMSG() {
+            $("#messages").children().remove();
+            $("#messages").removeClass();
+        }
     </script>
     
 </head>
@@ -75,15 +96,26 @@
         </div>
     </header>
     <main> 
+        <h1 id="up">ALUMNES A IMPORTAR</h1>
+        <div class="flex mb-5">
+            <div class="flex-1" id="breadcrumb"> <!-- fil d'ariadna -->
+                <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href="/admin/dashboard/alumnes">Alumnes</a> / <a><b>Importar</b></a>
+            </div>
+            <div class="theme-switcher-wrapper flex-2">
+                <div class="theme-switcher">
+                    <label class="theme-switcher__switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="theme-switcher__slider"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="messages"></div>
     	<table>
-    		<thead>
-				<th>alumnes a importar</th>	            
-        	</thead>
         	<tbody>
 	        <?php
 		        $count=0;
 		       	
-
 		        foreach ($_POST as $alumnes => $alumne) {
 		        	echo "<tr>";
 		        	if ($count!=0) {
@@ -91,21 +123,18 @@
 		        		$alumne=json_decode($alumne,true);
                         $name=$alumne["name"];
 		        		$email=$alumne["email"];
-
 		        		echo "<td>".$name. "</td>";
                         echo "<td>".$email. "</td>";   
 	
-
 		        	}
 		        	echo "</tr>";
 		        	$count ++;
-
 		        	
 		        }
 	         ?>
 	   		</tbody>
         </table>
-       	<button id="importB">Importar seleccionats</button> 
+       	<button  id="importB" onclick="window.location.href='#up'">Importar seleccionats</button> 
         
         
          

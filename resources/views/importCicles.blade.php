@@ -4,13 +4,14 @@
 	 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/water.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
+	<script src="{{ asset('js/app.js') }}"></script>
+	<script defer src="{{ asset('js/day_night.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Cursos</title>
     <script type="text/javascript">
     	$(document).ready(function(){
@@ -50,38 +51,78 @@
             function(data){actionFunc(data)}
         ).fail(
             function(jqXHR,textStatus, errorThrown){
-                    
+                    messages('error', "No ha funciona correctament!");
                     errorFunction(textStatus,errorThrown);
                 }
         )
    		 };
    		function importSucces(data){
-   			alert("Import dels cicles completat amb exit, en uns instants seras redirigit");
+            messages('success', "Import dels cicles completat amb exit, en uns instants seras redirigit")
    			setTimeout(function() {window.location.replace('/admin/dashboard/cicles');
-          }, 1000);
+          }, 3000);
    		}
         
-
+        function messages(code, message) {
+            var structure = $("#messages");
+            if ($('#messages').children().length == 0) {
+                if (code == "success") {
+                    structure.addClass("mt-5 mb-5 success");
+                    structure.append("<p><b>ÉXIT! | " + message + "</b></p>")
+                } else if (code == "error") {
+                    structure.addClass("mt-5 mb-5 errorMSG");
+                    structure.append("<p><b>ERROR! | " + message + "</b></p>")
+                } else if (code == "info") {
+                    structure.addClass("mt-5 mb-5 info");
+                    structure.append("<p><b>INFO! | " + message + "</b></p>")
+                } else if (code == "warning") {
+                    structure.addClass("mt-5 mb-5 warning");
+                    structure.append("<p><b>ADVERTÈNCIA! | " + message + "</b></p>")
+                }
+            }
+        }
+        
+        function deleteMSG() {
+            $("#messages").children().remove();
+            $("#messages").removeClass();
+        }
     </script>
     
 </head>
 
 <body>
     <header>
-        <div class="flex flex-row-reverse"> <!-- LOG OUT -->
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                Tanca sessió
-            </a>    
-            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </div>
-    </header>
+		<div class="flex">
+			<!-- LOG OUT -->
+			<div class="flex-1">
+				<img width="75px" src="{{ asset('/img/icon.png') }}">
+			</div>
+			<div class="flex-2">
+				<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+					Tanca sessió
+				</a>
+				<form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+					{{ csrf_field() }}
+				</form>
+			</div>
+		</div>
+	</header>
     <main> 
+        <h1 id="up">CICLES A IMPORTAR</h1>
+        <div class="flex mb-5">
+            <div class="flex-1" id="breadcrumb"> <!-- fil d'ariadna -->
+                <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href="/admin/dashboard/cicles">Cicles</a> / <a><b>Importar</b></a>
+            </div>
+            <div class="theme-switcher-wrapper flex-2">
+                <div class="theme-switcher">
+                    <label class="theme-switcher__switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="theme-switcher__slider"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="messages"></div>
     	<table>
-    		<thead>
-				<th>Cicles a importar</th>	            
-        	</thead>
         	<tbody>
 	        <?php
 		        $count=0;
@@ -105,7 +146,7 @@
 	         ?>
 	   		</tbody>
         </table>
-       	<button id="importB">Importar seleccionats</button> 
+       	<button onclick="window.location.href='#up'" id="importB">Importar seleccionats</button> 
         
         
          

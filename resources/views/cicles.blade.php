@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script defer src="{{ asset('js/day_night.js') }}"></script>

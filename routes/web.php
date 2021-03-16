@@ -193,15 +193,19 @@ Route::post('/admin/dashboard/alumnes/import', function (Request $request) {
             
             $name=$alumne['name'];
             $email=$alumne['email'];
-
-            User::create([
+            if ((User::where('email',$email))) {
+                User::create([
+                    
+                    'name'=>$name,
+                    'email'=>$email,
+                    'password'=>Hash::make("user"),
+                    'role'=>"user",
+                    
+                    ]);
+            } else {
                 
-                'name'=>$name,
-                'email'=>$email,
-                'password'=>Hash::make("user"),
-                'role'=>"user",
-               
-            ]);
+                
+            }
         }
         
     }else{
