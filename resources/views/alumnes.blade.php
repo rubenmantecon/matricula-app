@@ -91,6 +91,7 @@
 		$('#fileUpload').click();
 	});
 
+<<<<<<< Updated upstream
 	var page = getUrlParameter('page');
 	var totalPages = {
 		{
@@ -105,6 +106,36 @@
 	} else {
 		window.onload = messages('info', 'Página 1 mostrant 20 estudiants');
 	}
+=======
+    var page = getUrlParameter('page');
+    var totalPages = {{ $alumnes->lastPage() }};
+    if (page > totalPages) {
+        window.onload = messages('error', 'No se están mostrando estudiantes, vuelva a la pagina correcta');
+    }
+    if (page) {
+        window.onload = messages('info', 'Página '+ page + ' mostrant máxim 20 estudiants');
+    } else {
+        window.onload = messages('info', 'Página 1 mostrant máxim 20 estudiants');
+    }
+    function messages(code, message) {
+        var structure = $("#messages");
+        if ($('#messages').children().length == 0) {
+            if (code == "success") {
+                structure.addClass("mt-5 mb-5 success");
+                structure.append("<p><b>ÉXIT! | " + message + "</b></p>")
+            } else if (code == "error") {
+                structure.addClass("mt-5 mb-5 errorMSG");
+                structure.append("<p><b>ERROR! | " + message + "</b></p>")
+            } else if (code == "info") {
+                structure.addClass("mt-5 mb-5 info");
+                structure.append("<p><b>INFO! | " + message + "</b></p>")
+            } else if (code == "warning") {
+                structure.addClass("mt-5 mb-5 warning");
+                structure.append("<p><b>ADVERTÈNCIA! | " + message + "</b></p>")
+            }
+        }
+    }
+>>>>>>> Stashed changes
 
 	function messages(code, message) {
 		var structure = $("#messages");
