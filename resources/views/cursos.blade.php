@@ -71,7 +71,6 @@
             if (pulse == 0) {
                 var name = $(this).parent().parent().children('#name').text();
                 $('#breadcrumb').append( " <a id='added'>- <b>" + name + "</b></a>" );
-                console.log($(this).parent().parent().children('#name').text())
             }
             pulse = 1;
             edit = 1;

@@ -97,7 +97,6 @@
             if (pulse == 0) {
                 var name = $(this).parent().parent().children('#name').text();
                 $('#breadcrumb').append( " <a id='added'>- <b>" + name + "</b></a>" );
-                console.log($(this).parent().parent().children('#name').text())
             }
             pulse = 1;
             edit = 1;
@@ -110,8 +109,8 @@
         }else{
             $('tbody').append(`<tr id="createRow">
                             <td><input type="checkbox"></td>
-                            <td contenteditable="true">Data inici</td>
-                            <td contenteditable="true">Data fi</td>
+                            <td contenteditable="true">` + $.datepicker.formatDate('yy-mm-dd', new Date()) + `</td>
+                            <td contenteditable="true">` + $.datepicker.formatDate('yy-mm-dd', new Date()) + `</td>
                             <td contenteditable="true">Nom</td>
                             <td contenteditable="true">Descripcio</td>
                             <td><button class="saveCreate">Guarda</button></td>
