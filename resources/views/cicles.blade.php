@@ -78,9 +78,6 @@
 		<label for="uploadButton">
 			<button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
 		</label>
-		<label class="hidden" for="submitButton">
-			<button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
-		</label>
 	</div>
     <form style="display:none" method="POST" id="hiddenForm" action="{{route('importCicles')}}">
             @csrf
@@ -243,15 +240,12 @@
 	//Upload file button
 	$(document.body).on('click', '.upload-form__upload-button', function() {
 		$('#fileUpload').click();
-		$('label[for="submitButton"]').removeClass('hidden');
-
 
 	});
 
     //Detecting when the file is uploaded so we can do the request
     $(document.body).on('change','#fileUpload',function(){
         $('#fileSubmit').trigger('click');
-        $('label[for="submitButton"]').addClass('hidden');
         loadData(importDone);
 
     })
