@@ -8,6 +8,7 @@ use App\Models\Career;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\TestResponse;
 use App\Imports\TermsImport;
+use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 //use Log;
@@ -150,3 +151,63 @@ Route::get('/admin/dashboard/cicles/confirmacionSD', function () {
     return view('confirmacionSD');
     
 })->middleware(['auth',  'can:accessAdmin'])->name('confirmacionCicleSD');
+
+Route::post('/admin/dashboard/alumnes', function (Request $request) {
+    //$data = Term::all();
+
+    $existingAlumnes=array();
+    $alumnesData=array();
+    $cont=0;
+
+    $data=Excel::toArray(new UsersImport, $request->file('file'));
+    foreach ($data[0] as $alumne) {
+        if ($cont!=0) {
+           $nameAlumne= $alumne[4]." ".$alumne[5]." ".$alumne[6];
+
+            if (!in_array($nameAlumne,$existingAlumnes)) {
+                $arrayAlumne=array("name"=>$nameAlumne, "email"=>$alumne[40]);
+                array_push($existingAlumnes, $nameAlumne);
+                array_push($alumnesData, $arrayAlumne );
+            }
+        }
+        $cont ++;
+
+        
+    }
+
+    return $alumnesData;
+    
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('alumnes');
+
+Route::get('/admin/dashboard/alumnes/import', function () {
+    
+    return view('importAlumnes');
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('importAlumnes');
+
+
+Route::post('/admin/dashboard/alumnes/import', function (Request $request) {
+    if ($request->ajax()) {
+        foreach ($request->result as $alumne) {
+            
+            $name=$alumne['name'];
+            $email=$alumne['email'];
+
+            User::create([
+                
+                'name'=>$name,
+                'email'=>$email,
+                'password'=>Hash::make("user"),
+                'role'=>"user",
+               
+            ]);
+        }
+        
+    }else{
+
+        return view('importAlumnes');
+
+    }
+})->middleware(['auth',  'can:accessAdmin'])->name('importAlumnes');
+

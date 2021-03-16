@@ -21,14 +21,12 @@
         function getSelected(){
         	var data={result:[]};
         	var tdData;
-        	var name,code,desc,iniDate,endDate;
+        	var name,email;
         	$('input:checkbox:checked').each(function(){
         		name=$(this).parent().next().text();
-        		code=$(this).parent().next().data("code");
-        		desc=$(this).parent().next().data("desc");
-        		iniDate=$(this).parent().next().data("ini");
-        		endDate=$(this).parent().next().data("end");
-        		tdData={name:name,code:code,desc:desc,iniDate:iniDate,endDate:endDate};
+                email=$(this).parent().next().next().text();
+        		
+        		tdData={name:name,email:email};
         		data.result.push(tdData);
 
         	});
@@ -42,8 +40,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type:'POST',
-            url:'/admin/dashboard/cicles/import',
-            //data: JSON.stringify(data),
+            url:'/admin/dashboard/alumnes/import',
             data:data,
             
         }).done(
@@ -56,8 +53,8 @@
         )
    		 };
    		function importSucces(data){
-   			alert("Import dels cicles completat amb exit, en uns instants seras redirigit");
-   			setTimeout(function() {window.location.replace('/admin/dashboard/cicles');
+   			alert("Import dels alumnes completat amb exit, en uns instants seras redirigit");
+   			setTimeout(function() {window.location.replace('/admin/dashboard/alumnes');
           }, 1000);
    		}
         
@@ -80,21 +77,24 @@
     <main> 
     	<table>
     		<thead>
-				<th>Cicles a importar</th>	            
+				<th>alumnes a importar</th>	            
         	</thead>
         	<tbody>
 	        <?php
 		        $count=0;
 		       	
 
-		        foreach ($_POST as $terms => $term) {
+		        foreach ($_POST as $alumnes => $alumne) {
 		        	echo "<tr>";
 		        	if ($count!=0) {
 		        		echo "<td><input type='checkbox'></td>";
-		        		$term=json_decode($term,true);
-		        		$code=$term["code"];
+		        		$alumne=json_decode($alumne,true);
+                        $name=$alumne["name"];
+		        		$email=$alumne["email"];
 
-		        		echo "<td data-code='".$code."' data-desc='".$term["desc"]."' data-ini='".$term["iniDate"]."' data-end='".$term["endDate"]."'>".$term["name"]. "</td>";	
+		        		echo "<td>".$name. "</td>";
+                        echo "<td>".$email. "</td>";   
+	
 
 		        	}
 		        	echo "</tr>";
