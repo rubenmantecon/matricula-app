@@ -7,29 +7,33 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
 	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/scripts.js') }}"></script>
+	<script defer src="{{ asset('js/day_night.js') }}"></script>
+
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Loooreeem Ipsuuuuum</title>
 </head>
 
 <body>
 	<header>
-        <div class="flex"> <!-- LOG OUT -->
-            <div class="flex-1">
-                <img width="75px" src="{{ asset('/img/icon.png') }}">
-            </div>
-            <div class="flex-2">
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                    Tanca sessió
-                </a>    
-                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            </div>
-        </div>
-    </header>
+		<div class="flex">
+			<!-- LOG OUT -->
+			<div class="flex-1">
+				<img width="75px" src="{{ asset('/img/icon.png') }}">
+			</div>
+			<div class="flex-2">
+				<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+					Tanca sessió
+				</a>
+				<form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+					{{ csrf_field() }}
+				</form>
+			</div>
+		</div>
+	</header>
 	<nav>
 		<a href="#">Home</a>
 		<a href="#">About</a>
@@ -38,12 +42,7 @@
 	</nav>
 	<h1>Testing of classless styling</h1>
 
-	<div class="theme-switcher">
-		<label class="theme-switcher__switch" for="checkbox">
-			<input type="checkbox" id="checkbox" />
-			<div class="theme-switcher__slider"></div>
-		</label>
-	</div>
+
 
 	<h2>Kitchen Sink</h2>
 	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
@@ -105,11 +104,6 @@
 		</div>
 
 		<div>
-			<label for="checkbox">Checkbox:</label>
-			<input type="checkbox" name="checkbox" id="checkbox" />
-		</div>
-
-		<div>
 			<input type="submit" value="Submit" />
 		</div>
 	</form>
@@ -136,7 +130,7 @@
 		<tfoot>
 		</tfoot>
 	</table>
-<!-- 	<button id="createCareer" class="create">Afegeix un curs</button>
+	<!-- 	<button id="createCareer" class="create">Afegeix un curs</button>
 	<button class="getTest">Test GET</button>
 	<button class="postTest">Test POST</button> -->
 	</div>
@@ -146,30 +140,22 @@
 		<label for="upload" class="hidden">
 			<input type="file" name="upload" id="fileUpload">
 		</label>
-		<label class="hidden" for="fileSubmit">
-			<input type="submit" value="fileSubmit">
-		</label>
 		<label for="uploadButton">
 			<button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
 		</label>
-		<label class="hidden" for="submitButton">
-			<button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
-		</label>
+	</div>
+
+	<div class="theme-switcher-wrapper">
+		<div class="theme-switcher">
+			<label class="theme-switcher__switch" for="checkbox">
+				<input type="checkbox" id="checkbox" />
+				<div class="theme-switcher__slider"></div>
+			</label>
+		</div>
 	</div>
 
 </body>
 <script>
-	const toggleSwitch = document.querySelector('.theme-switcher__switch input[type="checkbox"]');
-
-	function switchTheme(e) {
-		if (e.target.checked) {
-			document.documentElement.setAttribute('data-theme', 'dark');
-		} else {
-			document.documentElement.setAttribute('data-theme', 'light');
-		}
-	}
-
-	toggleSwitch.addEventListener('change', switchTheme, false);
 
 	/* Table buttons functionality */
 	let rowTextValues = [];
@@ -184,7 +170,7 @@
 		rowElements.each(function(index, elem) {
 			rowTextValues.push(elem.innerHTML);
 		})
-		
+
 
 	});
 	//Cancel button
@@ -232,14 +218,6 @@
 	//Upload file button
 	$(document.body).on('click', '.upload-form__upload-button', function() {
 		$('#fileUpload').click();
-		$('label[for="submitButton"]').removeClass('hidden')
-	});
-
-	//Submit file button
-	$(document.body).on('click', 'label[for="submitButton"]', function() {
-		$('#fileSubmit').click();
-		$('label[for="submitButton"]').addClass('hidden');
-		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
 	});
 </script>
 

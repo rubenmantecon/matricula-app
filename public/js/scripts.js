@@ -1,27 +1,8 @@
-async function ajaxGET(url) {
-	let response = await fetch(url);
-	response = await response.json();
-	return response;
-}
-
-async function ajaxPOST(url, data = { action: "testing" }) {
-	let response = await fetch(url, {
-		method: "POST",
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-			"Accept": "application/json",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(data),
-	});
-	response = await response.json();
-	return response;
-}
-
 async function ajaxCall(url, verb, data) {
 	let response = await fetch(url, {
 		method: verb,
 		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
 			"Accept": "application/json",
 			"Content-Type": "application/json",
 		},
@@ -64,3 +45,4 @@ function spawnRows(json) {
 				</tr>`);
 	}
 }
+

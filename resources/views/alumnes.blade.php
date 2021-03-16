@@ -59,9 +59,6 @@
             <label for="uploadButton">
                 <button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
             </label>
-            <label class="hidden" for="submitButton">
-                <button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
-            </label>
         </div>
     </main>
     <footer class="flex items-center text-center">
@@ -75,14 +72,6 @@
 	//Upload file button
 	$(document.body).on('click', '.upload-form__upload-button', function() {
 		$('#fileUpload').click();
-		$('label[for="submitButton"]').removeClass('hidden')
-	});
-
-	//Submit file button
-	$(document.body).on('click', 'label[for="submitButton"]', function() {
-		$('#fileSubmit').click();
-		$('label[for="submitButton"]').addClass('hidden');
-		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
 	});
 </script>
 </html>
