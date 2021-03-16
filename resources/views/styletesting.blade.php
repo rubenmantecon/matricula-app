@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="">
 
 <head>
 	<meta charset="UTF-8">
@@ -156,7 +156,6 @@
 
 </body>
 <script>
-
 	/* Table buttons functionality */
 	let rowTextValues = [];
 	let isBeingEdited = false;
