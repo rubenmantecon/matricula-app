@@ -192,8 +192,6 @@
             });
         pulse = 0;
         edit = 0;
-        deleteMSG();
-        messages('success', "S'ha eliminat el curs correctament");
     });
 
     function messages(code, message) {

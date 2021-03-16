@@ -248,8 +248,6 @@
                         </tr>`)
                     }
                 });
-                deleteMSG();
-                messages('success', "S'ha eliminat el curs correctament");
             }
         }
         $('#added').remove();

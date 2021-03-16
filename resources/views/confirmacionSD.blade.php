@@ -28,8 +28,8 @@
         }
     }
     function incorrectName(){
-        $('#deleteCareer > input').addClass('error');
-        $('<label class="errorMSG" id="error-MSG">Los nombre no coinciden</label>').insertBefore('#deleteCareer > input');
+        deleteMSG();
+        messages('error', 'Los nombres no coinciden')
     }
     function removeIncorrectChanges(){
         $('#deleteCareer > input').removeClass('error');
@@ -61,31 +61,61 @@
         )
     };
     function softDeleteDone(data){
-        alert("Curs eliminat correctament, en uns segons serà redirigit a la pagina de cursos");
+        deleteMSG();
+        messages('success', "Curs eliminat correctament, en uns segons serà redirigit a la pagina de cursos")
         setTimeout(function() {
-            
             window.location.replace('/admin/dashboard/cursos');
-          }, 1000);
+          }, 2000);
     }
     function errorFunction(text, error){
-        alert("No ha sigut possible eliminar el curs ["+text+" "+error+"]");
+        deleteMSG();
+        messages('error', "No ha sigut possible eliminar el curs ["+text+" "+error+"]")
+    }
 
+    function messages(code, message) {
+        var structure = $("#messages");
+        if ($('#messages').children().length == 0) {
+            if (code == "success") {
+                structure.addClass("mt-5 mb-5 success");
+                structure.append("<p><b>ÉXIT! | " + message + "</b></p>")
+            } else if (code == "error") {
+                structure.addClass("mt-5 mb-5 errorMSG");
+                structure.append("<p><b>ERROR! | " + message + "</b></p>")
+            } else if (code == "info") {
+                structure.addClass("mt-5 mb-5 info");
+                structure.append("<p><b>INFO! | " + message + "</b></p>")
+            } else if (code == "warning") {
+                structure.addClass("mt-5 mb-5 warning");
+                structure.append("<p><b>ADVERTÈNCIA! | " + message + "</b></p>")
+            }
+        }
+    }
+
+    function deleteMSG() {
+        $("#messages").children().remove();
+        $("#messages").removeClass();
     }
 
 </script>
 <body>
     <header>
-        <div class="flex flex-row-reverse"> <!-- LOG OUT -->
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                Tanca sessió
-            </a>    
-            <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
+        <div class="flex"> <!-- LOG OUT -->
+            <div class="flex-1">
+                <img width="75px" src="{{ asset('/img/icon.png') }}">
+            </div>
+            <div class="flex-2">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                    Tanca sessió
+                </a>    
+                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </div>
         </div>
     </header>
-    <main> 
-        
+    <main>
+        <H1>CONFIRMACIÓ D'ESBORRAR</H1>
+        <div id="messages"></div>
         <form id="deleteCareer" >
             <label>El curs <b> <?php echo $_GET['name'];  ?> </b>serà <b>eliminat</b>, per a procedir torna a escriure el nom : </label>
             <br>
