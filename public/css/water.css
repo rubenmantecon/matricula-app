@@ -52,6 +52,8 @@
 	}
 }
 
+
+
 html {
 	scrollbar-color: rgb(213, 213, 213) #fff;
 	scrollbar-color: var(--scrollbar-thumb) var(--background-body);
@@ -1159,6 +1161,10 @@ th {
 	text-align: left;
 	vertical-align: top;
 	word-wrap: break-word;
+}
+
+td[contenteditable=true] {
+	border: 1px solid var(--focus);
 }
 
 thead {
