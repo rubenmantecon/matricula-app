@@ -144,4 +144,9 @@ Route::get("/log", function(){
 Route::get('/admin/dashboard/cursos/confirmacionSD', function () {
     return view('confirmacionSD');
     
-})->middleware(['auth',  'can:accessAdmin'])->name('confirmacionSD');
+})->middleware(['auth',  'can:accessAdmin'])->name('confirmacionCursoSD');
+
+Route::get('/admin/dashboard/cicles/confirmacionSD', function () {
+    return view('confirmacionSD');
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('confirmacionCicleSD');
