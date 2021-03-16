@@ -253,3 +253,33 @@ tbody tr:nth-child(even) button.basura:hover {
     background-color: #ffdddd;
     border:1px solid red;
 }
+
+.success {
+	background-color: #39a33c;
+	text-align: center;
+	padding: 1px;
+	border-radius: 5px;
+}
+
+.info {
+	background-color: #41adff;
+	text-align: center;
+	padding: 1px;
+	border-radius: 5px;
+}
+
+.errorMSG {
+	background-color: #dc2626;
+	text-align: center;
+	padding: 1px;
+	border-radius: 5px;
+	color: white;
+}
+
+.warning {
+	background-color: #efdb43;
+	text-align: center;
+	padding: 1px;
+	border-radius: 5px;
+	color: black;
+}

@@ -31,6 +31,7 @@
         <div id="breadcrumb"> <!-- fil d'ariadna -->
             <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a><b>Cursos</b></a>
         </div>
+        <div id="messages"></div>
         <table>
         <thead>
             <th></th>
@@ -64,6 +65,8 @@
     var pulse = 0;
     var edit = 0;
     $(document.body).on('click','.edit',function() {
+        deleteMSG()
+        messages('info', "Estas editant un curs ");
         if ( edit == 0 ) {
             $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
             $(this).siblings().removeClass('hidden')
@@ -78,6 +81,8 @@
     });
 
     $(document.body).on('click','.create',function(){
+        deleteMSG()
+        messages('info', "Estas creant un curs nou");
         if($('#createRow').length){
 
         }else{
@@ -93,12 +98,16 @@
         
     });
     $(document.body).on('click','.cancelCreate',function(){
+        deleteMSG()
+        messages('warning', "S'ha cancelat la creació del curs ");
         $('#createRow').remove()
         $('#added').remove();
         pulse = 0;
         edit = 0;
     });
     $(document.body).on('click','.saveCreate',function(){
+        deleteMSG()
+        messages('success', "S'ha guardat el curs nou");
         $('#added').remove();
         pulse = 0;
         edit = 0;
@@ -127,6 +136,8 @@
     })
 
     $(document.body).on('click','.cancel',function() {
+        deleteMSG();
+        messages('warning', "No s'han guardat els canvis que s'estaven modificant");
         $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
         $(this).siblings(':not(.edit)').addClass('hidden')
         $(this).addClass('hidden');
@@ -164,6 +175,8 @@
                         </tr>`)
             }
         });
+        deleteMSG();
+        messages('success', "S'han guardat els canvis correctament");
     })
     
     $(document.body).on('click','.delete',function() {
@@ -179,7 +192,33 @@
             });
         pulse = 0;
         edit = 0;
+        deleteMSG();
+        messages('success', "S'ha eliminat el curs correctament");
     });
+
+    function messages(code, message) {
+        var structure = $("#messages");
+        if ($('#messages').children().length == 0) {
+            if (code == "success") {
+                structure.addClass("mt-5 mb-5 success");
+                structure.append("<p><b>ÉXIT! | " + message + "</b></p>")
+            } else if (code == "error") {
+                structure.addClass("mt-5 mb-5 errorMSG");
+                structure.append("<p><b>ERROR! | " + message + "</b></p>")
+            } else if (code == "info") {
+                structure.addClass("mt-5 mb-5 info");
+                structure.append("<p><b>INFO! | " + message + "</b></p>")
+            } else if (code == "warning") {
+                structure.addClass("mt-5 mb-5 warning");
+                structure.append("<p><b>ADVERTÈNCIA! | " + message + "</b></p>")
+            }
+        }
+    }
+
+    function deleteMSG() {
+        $("#messages").children().remove();
+        $("#messages").removeClass();
+    }
 </script>
     </main>
     <footer class="flex items-center text-center">

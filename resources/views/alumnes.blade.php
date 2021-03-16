@@ -30,6 +30,7 @@
         <div> <!-- fil d'ariadna -->
             <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Alumnes</b></a>
         </div>
+        <div id="messages"></div>
         <table>
             <tr>   
                 <th>Nom</th>
@@ -84,5 +85,52 @@
 		$('label[for="submitButton"]').addClass('hidden');
 		/* TODO: Añadir comportamiento (redirects, controllers, ajax, etc) */
 	});
+
+    var page = getUrlParameter('page');
+    var totalPages = {{ $alumnes->lastPage() }};
+    if (page > totalPages) {
+        window.onload = messages('error', 'No se están mostrando estudiantes, vuelva a la pagina correcta');
+    }
+    window.onload = messages('info', 'Página '+ page + ' mostrant 20 estudiants');
+    function messages(code, message) {
+        var structure = $("#messages");
+        if ($('#messages').children().length == 0) {
+            if (code == "success") {
+                structure.addClass("mt-5 mb-5 success");
+                structure.append("<p><b>ÉXIT! | " + message + "</b></p>")
+            } else if (code == "error") {
+                structure.addClass("mt-5 mb-5 errorMSG");
+                structure.append("<p><b>ERROR! | " + message + "</b></p>")
+            } else if (code == "info") {
+                structure.addClass("mt-5 mb-5 info");
+                structure.append("<p><b>INFO! | " + message + "</b></p>")
+            } else if (code == "warning") {
+                structure.addClass("mt-5 mb-5 warning");
+                structure.append("<p><b>ADVERTÈNCIA! | " + message + "</b></p>")
+            }
+        }
+    }
+
+    function deleteMSG() {
+        $("#messages").children().remove();
+        $("#messages").removeClass();
+    }
+
+    function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
 </script>
 </html>
