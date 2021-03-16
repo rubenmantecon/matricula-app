@@ -246,3 +246,10 @@ tbody tr:nth-child(even) button.basura:hover {
 	background-color: orangered;
 	color: white;
 }
+.error, .errorMSG{
+            color:#dc2626;
+        }
+.error{
+    background-color: #ffdddd;
+    border:1px solid red;
+}

@@ -130,12 +130,6 @@ Route::post('/admin/dashboard/cicles/import', function (Request $request) {
 })->middleware(['auth',  'can:accessAdmin'])->name('importCicles');
 
 
-
-
-
-
-
-
 require __DIR__ . '/auth.php';
 
 //Page to test logs, if you enter to this route a log will be written in the logs table
@@ -145,3 +139,9 @@ Route::get("/log", function(){
  
     return ["result" => true];
 });
+
+
+Route::get('/admin/dashboard/cursos/confirmacionSD', function () {
+    return view('confirmacionSD');
+    
+})->middleware(['auth',  'can:accessAdmin'])->name('confirmacionSD');

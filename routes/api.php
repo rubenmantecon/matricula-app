@@ -46,13 +46,18 @@ Route::get('/admin/dashboard/cicles', function (Request $request) {
 Route::post('/admin/dashboard/cursos', function (Request $request) {
 	$action= $request->action;
 	$message="invalid action";
-	//var_dump($request->id);
-        //TODO: change the key array
-    //$dataArray=json_decode($request->array,true);
     if($action=='delete'){
-    		var_dump($request->id);
+    		/*var_dump($request->id);
             Career::find($request->id)->delete();
-            $message="Register deleted succesfully";
+            */
+            $dataArray=$request->result;
+
+    	    $id=(int)$dataArray[0]["id"];
+    	    $name=$dataArray[1]["name"];
+    	    $careerSD = array('id' => $id, 'name' => $name);
+
+			$careerSD= json_encode($careerSD);
+			return route('confirmacionSD', ['id' => $id,'name' => $name]);
 
     }else if($action=='create'){
     		$createArray=$request->result;
@@ -128,5 +133,12 @@ Route::post('/admin/dashboard/cicles', function (Request $request) {
 
     }
 	return response()->json($message);
+
+});
+
+Route::post('/admin/dashboard/cursos/confirmacionSD', function (Request $request) {
+    //var_dump($request->id);
+    Career::find((int)$request->id)->delete();
+    
 
 });
