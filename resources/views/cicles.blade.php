@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/water.css') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
-    <script src="{{ asset('js/app.js') }}"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
+	<script src="{{ asset('js/app.js') }}"></script>
+	<script defer src="{{ asset('js/day_night.js') }}"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script defer src="{{ asset('js/day_night.js') }}"></script>
     <title>Cicles</title>
 </head>
 <body>
