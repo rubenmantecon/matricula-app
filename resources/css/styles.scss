@@ -105,7 +105,7 @@
 
 	&__upload-button {
 		position: absolute;
-		right: -20%;
+		right: -15%;
 		background-color: var(--variable);
 		border: none;
 		color: var(--background);
@@ -123,7 +123,7 @@
 
 	&__submit-button {
 		position: absolute;
-		right: -30%;
+		right: -25%;
 		background-color: var(--form-text);
 		border: none;
 		color: var(--background);
@@ -156,7 +156,7 @@
 	}
 
 	input:checked + &__slider {
-		background-color: var(--variable);
+		background-color: #39a33c;
 	}
 	
 	input:checked + &__slider:before {

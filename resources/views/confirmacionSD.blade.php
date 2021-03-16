@@ -12,15 +12,15 @@
 </head>
 <script type="text/javascript">
     $(document).ready(function(){
-        $(document.body).on('click','#deleteCareer > button',function(e){
+        $(document.body).on('click','#deleteRegister > button',function(e){
             comprobarSD(e);
         });
-        $('#deleteCareer > input').click(removeIncorrectChanges);
+        $('#deleteRegister > input').click(removeIncorrectChanges);
     });
     function comprobarSD(event){
         event.preventDefault();
-        var careerName=$('#deleteCareer > input').attr("data-name");
-        var careerInput=$('#deleteCareer > input').val();
+        var careerName=$('#deleteRegister > input').attr("data-name");
+        var careerInput=$('#deleteRegister > input').val();
         if (careerName==careerInput) {
             correctName();
         }else{
@@ -32,23 +32,29 @@
         messages('error', 'Los nombres no coinciden')
     }
     function removeIncorrectChanges(){
-        $('#deleteCareer > input').removeClass('error');
-        $('#error-MSG').remove();
+        $('#deleteRegister > input').removeClass('error');
 
     }
     function correctName(){
-        var delete_id=$('#deleteCareer > input').attr('id');
+        var url;
+        var delete_id=$('#deleteRegister > input').attr('id');
+        var page=$('#deleteRegister').data('register');
+        if (page=='cursos') {
+            url='/api/admin/dashboard/cursos/confirmacionSD';
+        }else if (page=='cicles'){
+            url='/api/admin/dashboard/cicles/confirmacionSD';
+        }
         console.log(delete_id);
         data={id:delete_id};
-        loadData(softDeleteDone,data)
+        loadData(softDeleteDone,data,url)
     }
-    function loadData(actionFunc,data){
+    function loadData(actionFunc,data,url){
         $.ajax({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type:'POST',
-            url:'/api/admin/dashboard/cursos/confirmacionSD',
+            url: url,
             data: data,
             
         }).done(
@@ -64,8 +70,16 @@
         deleteMSG();
         messages('success', "Curs eliminat correctament, en uns segons serà redirigit a la pagina de cursos")
         setTimeout(function() {
-            window.location.replace('/admin/dashboard/cursos');
-          }, 2000);
+            var url;
+            var page=$('#deleteRegister').data('register');
+            if (page=='cursos') {
+                url='/admin/dashboard/cursos';
+            }else if (page=='cicles'){
+                url='/admin/dashboard/cicles';
+            }
+            
+            window.location.replace(url);
+          }, 1000);
     }
     function errorFunction(text, error){
         deleteMSG();

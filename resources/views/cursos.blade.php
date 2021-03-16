@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/water.css') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
-    <script src="{{ asset('js/app.js') }}"></script>
-    <title>Cursos</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ asset('css/water.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	<link rel="shortcut icon" type="image/png" href="{{ asset('/img/icon.png') }}">
+	<script src="{{ asset('js/app.js') }}"></script>
+	<script defer src="{{ asset('js/day_night.js') }}"></script>
+
+	<title>Cursos</title>
 </head>
+
 <body>
     <header>
         <div class="flex"> <!-- LOG OUT -->
@@ -94,35 +98,41 @@
                             <td><button class="saveCreate">Guarda</button></td>
                             <td><button class="cancelCreate">Cancela</button></td>
                         </tr>`)
-        }
-        
-    });
-    $(document.body).on('click','.cancelCreate',function(){
+		}
+
+	});
+	$(document.body).on('click', '.cancelCreate', function() {
         deleteMSG()
         messages('warning', "S'ha cancelat la creació del curs ");
-        $('#createRow').remove()
-        $('#added').remove();
-        pulse = 0;
-        edit = 0;
-    });
-    $(document.body).on('click','.saveCreate',function(){
+		$('#createRow').remove()
+		$('#added').remove();
+		pulse = 0;
+		edit = 0;
+	});
+	$(document.body).on('click', '.saveCreate', function() {
         deleteMSG()
         messages('success', "S'ha guardat el curs nou");
-        $('#added').remove();
-        pulse = 0;
-        edit = 0;
-        var name_career=$("#createRow>td").eq(1).text();
-        var code_career=$("#createRow>td").eq(2).text();
-        var description_career=$("#createRow>td").eq(3).text();
-        console.log();
-        $.post('/api/admin/dashboard/cursos', {
-            action: 'create',
-            result:[{name:name_career},{code:code_career},{description:description_career}] 
-        });
-        $('tbody').empty();
-        $.getJSON('/api/admin/dashboard/cursos').done(response => {
-            for (const jsonObject in response) {
-                $('tbody').append(`
+		$('#added').remove();
+		pulse = 0;
+		edit = 0;
+		var name_career = $("#createRow>td").eq(1).text();
+		var code_career = $("#createRow>td").eq(2).text();
+		var description_career = $("#createRow>td").eq(3).text();
+		console.log();
+		$.post('/api/admin/dashboard/cursos', {
+			action: 'create',
+			result: [{
+				name: name_career
+			}, {
+				code: code_career
+			}, {
+				description: description_career
+			}]
+		});
+		$('tbody').empty();
+		$.getJSON('/api/admin/dashboard/cursos').done(response => {
+			for (const jsonObject in response) {
+				$('tbody').append(`
                         <tr id="${response[jsonObject]['id']}">
                             <td><input type="checkbox"></td>
                             <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
@@ -131,40 +141,48 @@
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
                         <td><button class="delete bg-red-400">Borra</button></td>
                         </tr>`)
-            }
-        });
-    })
+			}
+		});
+	})
 
-    $(document.body).on('click','.cancel',function() {
+	$(document.body).on('click', '.cancel', function() {
         deleteMSG();
         messages('warning', "No s'han guardat els canvis que s'estaven modificant");
-        $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
-        $(this).siblings(':not(.edit)').addClass('hidden')
-        $(this).addClass('hidden');
-        $('#added').remove();
-        pulse = 0;
-        edit = 0;
-    });
-    $(document.body).on('click','.update',function() {
-        $('#added').remove();
-        pulse = 0;
-        edit = 0;
-        $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
-        $(this).siblings(':not(.edit)').addClass('hidden')
-        $(this).addClass('hidden');
-        var id_career = $(this).parent().parent().attr('id');
-        var name_career=$('#'+id_career +">td").eq(1).text();
-        var code_career=$('#'+id_career +">td").eq(2).text();
-        var description_career=$('#'+id_career +">td").eq(3).text();
+		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
+		$(this).siblings(':not(.edit)').addClass('hidden')
+		$(this).addClass('hidden');
+		$('#added').remove();
+		pulse = 0;
+		edit = 0;
+	});
+	$(document.body).on('click', '.update', function() {
+		$('#added').remove();
+		pulse = 0;
+		edit = 0;
+		$(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
+		$(this).siblings(':not(.edit)').addClass('hidden')
+		$(this).addClass('hidden');
+		var id_career = $(this).parent().parent().attr('id');
+		var name_career = $('#' + id_career + ">td").eq(1).text();
+		var code_career = $('#' + id_career + ">td").eq(2).text();
+		var description_career = $('#' + id_career + ">td").eq(3).text();
 
-        $.post('/api/admin/dashboard/cursos', {
-            action: 'update',
-            result:[{id:id_career},{name:name_career},{code:code_career},{description:description_career}] 
-        });
-        $('tbody').empty();
-        $.getJSON('/api/admin/dashboard/cursos').done(response => {
-            for (const jsonObject in response) {
-                $('tbody').append(`
+		$.post('/api/admin/dashboard/cursos', {
+			action: 'update',
+			result: [{
+				id: id_career
+			}, {
+				name: name_career
+			}, {
+				code: code_career
+			}, {
+				description: description_career
+			}]
+		});
+		$('tbody').empty();
+		$.getJSON('/api/admin/dashboard/cursos').done(response => {
+			for (const jsonObject in response) {
+				$('tbody').append(`
                         <tr id="${response[jsonObject]['id']}">
                             <td><input type="checkbox"></td>
                             <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
@@ -218,11 +236,12 @@
         $("#messages").removeClass();
     }
 </script>
-    </main>
-    <footer class="flex items-center text-center">
-        <div class="full">
-            <p>© IES Esteve Terradas i Illa</p>
-        </div>
-    </footer>
+</main>
+<footer class="flex items-center text-center">
+	<div class="full">
+		<p>© IES Esteve Terradas i Illa</p>
+	</div>
+</footer>
 </body>
+
 </html>

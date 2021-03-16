@@ -79,9 +79,6 @@
 		<label for="uploadButton">
 			<button name="uploadButton" class="material-icons upload-form__upload-button">file_upload</button>
 		</label>
-		<label class="hidden" for="submitButton">
-			<button name="submitButton" class="material-icons upload-form__submit-button">file_upload</button>
-		</label>
 	</div>
     <form style="display:none" method="POST" id="hiddenForm" action="{{route('importCicles')}}">
             @csrf
@@ -216,41 +213,16 @@
     })
     
     $(document.body).on('click','.delete',function() {
-        
-        //Alert, pidiendo confirmación de borrado con botón
-        let userDecision = confirm('Pero tú ya sabes lo que haces?')
-        if (userDecision == true) {
-            let userConfirmation = prompt('Introcuce el nombre del curso');
-
-            if (userConfirmation == $(this).parent().parent().children().eq(3).text()) {
-                var id = $(this).parent().parent().attr('id');
-
-                //Send id via POST to trigger deletion
-                $.post('/api/admin/dashboard/cicles', {
-                    action: 'delete',
-                    id: id
-                });
-                //Refresh view after deletion
-                $('tbody').empty();
-                $.getJSON('/api/admin/dashboard/cicles').done(response => {
-                    for (const jsonObject in response) {
-                        //Empty the whole tbody
-                        //Repopulate tbody with data via GET
-                        $('tbody').append(`
-                        <tr id="${response[jsonObject]['id']}">
-                            <td><input type="checkbox"></td>
-                            <td contenteditable="false">${response[jsonObject]['start']}</td>
-                            <td contenteditable="false">${response[jsonObject]['end']}</td>
-                            <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
-                            <td contenteditable="false">${response[jsonObject]['description']}</td>
-                            <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
-                        <td><button class="delete basura">Borra</button></td>
-                        </tr>`)
-                    }
-                });
-            }
-        }
-        $('#added').remove();
+        var id_term = $(this).parent().parent().attr('id');
+        var name_term=$('#'+id_term +">td").eq(3).text();
+            //Send id via POST to trigger deletion
+            $.post('/api/admin/dashboard/cicles', {
+                action: 'delete',
+                result: [{id:id_term},{name:name_term}]
+            }).done(function(response) {
+                    window.location.replace(response);
+                
+            });
         pulse = 0;
         edit = 0;
 
@@ -260,15 +232,12 @@
 	//Upload file button
 	$(document.body).on('click', '.upload-form__upload-button', function() {
 		$('#fileUpload').click();
-		$('label[for="submitButton"]').removeClass('hidden');
-
 
 	});
 
     //Detecting when the file is uploaded so we can do the request
     $(document.body).on('change','#fileUpload',function(){
         $('#fileSubmit').trigger('click');
-        $('label[for="submitButton"]').addClass('hidden');
         loadData(importDone);
 
     })
