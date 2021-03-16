@@ -12,15 +12,15 @@
 </head>
 <script type="text/javascript">
     $(document).ready(function(){
-        $(document.body).on('click','#deleteCareer > button',function(e){
+        $(document.body).on('click','#deleteRegister > button',function(e){
             comprobarSD(e);
         });
-        $('#deleteCareer > input').click(removeIncorrectChanges);
+        $('#deleteRegister > input').click(removeIncorrectChanges);
     });
     function comprobarSD(event){
         event.preventDefault();
-        var careerName=$('#deleteCareer > input').attr("data-name");
-        var careerInput=$('#deleteCareer > input').val();
+        var careerName=$('#deleteRegister > input').attr("data-name");
+        var careerInput=$('#deleteRegister > input').val();
         if (careerName==careerInput) {
             correctName();
         }else{
@@ -28,27 +28,33 @@
         }
     }
     function incorrectName(){
-        $('#deleteCareer > input').addClass('error');
-        $('<label class="errorMSG" id="error-MSG">Los nombre no coinciden</label>').insertBefore('#deleteCareer > input');
+        $('#deleteRegister > input').addClass('error');
+        
     }
     function removeIncorrectChanges(){
-        $('#deleteCareer > input').removeClass('error');
-        $('#error-MSG').remove();
+        $('#deleteRegister > input').removeClass('error');
 
     }
     function correctName(){
-        var delete_id=$('#deleteCareer > input').attr('id');
+        var url;
+        var delete_id=$('#deleteRegister > input').attr('id');
+        var page=$('#deleteRegister').data('register');
+        if (page=='cursos') {
+            url='/api/admin/dashboard/cursos/confirmacionSD';
+        }else if (page=='cicles'){
+            url='/api/admin/dashboard/cicles/confirmacionSD';
+        }
         console.log(delete_id);
         data={id:delete_id};
-        loadData(softDeleteDone,data)
+        loadData(softDeleteDone,data,url)
     }
-    function loadData(actionFunc,data){
+    function loadData(actionFunc,data,url){
         $.ajax({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type:'POST',
-            url:'/api/admin/dashboard/cursos/confirmacionSD',
+            url: url,
             data: data,
             
         }).done(
@@ -63,8 +69,15 @@
     function softDeleteDone(data){
         alert("Curs eliminat correctament, en uns segons serà redirigit a la pagina de cursos");
         setTimeout(function() {
+            var url;
+            var page=$('#deleteRegister').data('register');
+            if (page=='cursos') {
+                url='/admin/dashboard/cursos';
+            }else if (page=='cicles'){
+                url='/admin/dashboard/cicles';
+            }
             
-            window.location.replace('/admin/dashboard/cursos');
+            window.location.replace(url);
           }, 1000);
     }
     function errorFunction(text, error){
@@ -86,8 +99,8 @@
     </header>
     <main> 
         
-        <form id="deleteCareer" >
-            <label>El curs <b> <?php echo $_GET['name'];  ?> </b>serà <b>eliminat</b>, per a procedir torna a escriure el nom : </label>
+        <form id="deleteRegister" data-register="<?php echo $_GET['page']; ?>" >
+            <label>El registre <b> <?php echo $_GET['name'];  ?> </b>serà <b>eliminat</b>, per a procedir torna a escriure el nom : </label>
             <br>
             <input id="<?php echo $_GET['id']; ?>" data-name="<?php echo $_GET['name'];  ?>" type="text" name="career">
             <button>Eliminar</button>
