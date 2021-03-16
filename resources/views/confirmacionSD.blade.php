@@ -33,8 +33,8 @@
     }
     function removeIncorrectChanges(){
         $('#deleteRegister > input').removeClass('error');
-
     }
+    
     function correctName(){
         var url;
         var delete_id=$('#deleteRegister > input').attr('id');
@@ -130,8 +130,8 @@
     <main>
         <H1>CONFIRMACIÓ D'ESBORRAR</H1>
         <div id="messages"></div>
-        <form id="deleteCareer" >
-            <label>El curs <b> <?php echo $_GET['name'];  ?> </b>serà <b>eliminat</b>, per a procedir torna a escriure el nom : </label>
+        <form id="deleteRegister" data-register="<?php echo $_GET['page']; ?>" >
+            <label>El registre <b> <?php echo $_GET['name'];  ?> </b>serà <b>eliminat</b>, per a procedir torna a escriure el nom : </label>
             <br>
             <input id="<?php echo $_GET['id']; ?>" data-name="<?php echo $_GET['name'];  ?>" type="text" name="career">
             <button>Eliminar</button>
