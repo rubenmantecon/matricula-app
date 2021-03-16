@@ -32,10 +32,18 @@
     </header>
     <main>
         <H1>CURSOS</H1>
-        <div id="breadcrumb"> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a><b>Cursos</b></a>
+        <div class="flex" id="breadcrumb"> <!-- fil d'ariadna -->
+            <a href="/"> Inici </a> / <a href="/dashboard"> Panell de control </a> / <a><b> Cursos </b></a>
+            <div class="theme-switcher-wrapper mt-5 mb-5 flex flex-row-reverse">
+                <div class="theme-switcher">
+                    <label class="theme-switcher__switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="theme-switcher__slider"></div>
+                    </label>
+                </div>
+            </div>
         </div>
-        <div id="messages"></div>
+    <div id="messages"></div>
         <table>
         <thead>
             <th></th>

@@ -80,7 +80,11 @@
     if (page > totalPages) {
         window.onload = messages('error', 'No se están mostrando estudiantes, vuelva a la pagina correcta');
     }
-    window.onload = messages('info', 'Página '+ page + ' mostrant 20 estudiants');
+    if (page) {
+        window.onload = messages('info', 'Página '+ page + ' mostrant 20 estudiants');
+    } else {
+        window.onload = messages('info', 'Página 1 mostrant 20 estudiants');
+    }
     function messages(code, message) {
         var structure = $("#messages");
         if ($('#messages').children().length == 0) {
