@@ -28,8 +28,8 @@
     </header>
     <main>
         <H1>CURSOS</H1>
-        <div> <!-- fil d'ariadna -->
-            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Cursos</b></a>
+        <div id="breadcrumb"> <!-- fil d'ariadna -->
+            <a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a><b>Cursos</b></a>
         </div>
         <table>
         <thead>
@@ -43,7 +43,7 @@
             @foreach ($careers as $career)
             <tr id=<?php echo $career->id;  ?>>
                 <td><input type="checkbox"></td>
-                <td contenteditable="false">{{ $career->name }}</td>
+                <td id="name" contenteditable="false">{{ $career->name }}</td>
                 <td contenteditable="false">{{$career->code}}</td>
                 <td contenteditable="false">{{$career->description}}</td>
                 <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
@@ -61,9 +61,17 @@
         </tr>
 </body>
 <script>
+    var pulse = 0;
     $(document.body).on('click','.edit',function() {
         $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
         $(this).siblings().removeClass('hidden')
+        
+        if (pulse == 0) {
+            var name = $(this).parent().parent().children('#name').text();
+            $('#breadcrumb').append( " <a id='added'>- <b>" + name + "</b></a>" );
+            console.log($(this).parent().parent().children('#name').text())
+        }
+        pulse = 1;
     });
 
     $(document.body).on('click','.create',function(){
@@ -83,8 +91,12 @@
     });
     $(document.body).on('click','.cancelCreate',function(){
         $('#createRow').remove()
+        $('#added').remove();
+        pulse = 0;
     });
     $(document.body).on('click','.saveCreate',function(){
+        $('#added').remove();
+        pulse = 0;
         var name_career=$("#createRow>td").eq(1).text();
         var code_career=$("#createRow>td").eq(2).text();
         var description_career=$("#createRow>td").eq(3).text();
@@ -99,7 +111,7 @@
                 $('tbody').append(`
                         <tr id="${response[jsonObject]['id']}">
                             <td><input type="checkbox"></td>
-                            <td  contenteditable="false">${response[jsonObject]['name']}</td>
+                            <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
                             <td contenteditable="false">${response[jsonObject]['code']}</td>
                             <td contenteditable="false">${response[jsonObject]['description']}</td>
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
@@ -113,8 +125,12 @@
         $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
         $(this).siblings(':not(.edit)').addClass('hidden')
         $(this).addClass('hidden');
+        $('#added').remove();
+        pulse = 0;
     });
     $(document.body).on('click','.update',function() {
+        $('#added').remove();
+        pulse = 0;
         $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
         $(this).siblings(':not(.edit)').addClass('hidden')
         $(this).addClass('hidden');
@@ -133,7 +149,7 @@
                 $('tbody').append(`
                         <tr id="${response[jsonObject]['id']}">
                             <td><input type="checkbox"></td>
-                            <td  contenteditable="false">${response[jsonObject]['name']}</td>
+                            <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
                             <td contenteditable="false">${response[jsonObject]['code']}</td>
                             <td contenteditable="false">${response[jsonObject]['description']}</td>
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
@@ -166,7 +182,7 @@
                         $('tbody').append(`
                         <tr id="${response[jsonObject]['id']}">
                             <td><input type="checkbox"></td>
-                            <td  contenteditable="false">${response[jsonObject]['name']}</td>
+                            <td id="name" contenteditable="false">${response[jsonObject]['name']}</td>
                             <td contenteditable="false">${response[jsonObject]['code']}</td>
                             <td contenteditable="false">${response[jsonObject]['description']}</td>
                             <td><button class="edit">Edita</button><button class="hidden cancel">Cancela</button><button class="hidden update">Guarda</button></td>
@@ -176,6 +192,8 @@
                 });
             }
         }
+        $('#added').remove();
+        pulse = 0;
     });
 </script>
     </main>
