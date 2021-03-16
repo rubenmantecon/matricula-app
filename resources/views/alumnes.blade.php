@@ -36,7 +36,7 @@
 		<div class="flex">
 			<div class="flex-1" id="breadcrumb">
 				<!-- fil d'ariadna -->
-				<a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href=""><b>Alumnes</b></a>
+				<a href="/">Inici</a> / <a href="/dashboard">Panell de control</a> / <a href="/admin/dashboard/alumnes"><b>Alumnes</b></a>
 			</div>
 			<div class="theme-switcher-wrapper flex-2">
 				<div class="theme-switcher">
