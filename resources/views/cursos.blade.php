@@ -62,16 +62,20 @@
 </body>
 <script>
     var pulse = 0;
+    var edit = 0;
     $(document.body).on('click','.edit',function() {
-        $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
-        $(this).siblings().removeClass('hidden')
-        
-        if (pulse == 0) {
-            var name = $(this).parent().parent().children('#name').text();
-            $('#breadcrumb').append( " <a id='added'>- <b>" + name + "</b></a>" );
-            console.log($(this).parent().parent().children('#name').text())
+        if ( edit == 0 ) {
+            $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'true');
+            $(this).siblings().removeClass('hidden')
+            
+            if (pulse == 0) {
+                var name = $(this).parent().parent().children('#name').text();
+                $('#breadcrumb').append( " <a id='added'>- <b>" + name + "</b></a>" );
+                console.log($(this).parent().parent().children('#name').text())
+            }
+            pulse = 1;
+            edit = 1;
         }
-        pulse = 1;
     });
 
     $(document.body).on('click','.create',function(){
@@ -93,10 +97,12 @@
         $('#createRow').remove()
         $('#added').remove();
         pulse = 0;
+        edit = 0;
     });
     $(document.body).on('click','.saveCreate',function(){
         $('#added').remove();
         pulse = 0;
+        edit = 0;
         var name_career=$("#createRow>td").eq(1).text();
         var code_career=$("#createRow>td").eq(2).text();
         var description_career=$("#createRow>td").eq(3).text();
@@ -127,10 +133,12 @@
         $(this).addClass('hidden');
         $('#added').remove();
         pulse = 0;
+        edit = 0;
     });
     $(document.body).on('click','.update',function() {
         $('#added').remove();
         pulse = 0;
+        edit = 0;
         $(this).parent().siblings('td[contenteditable]').prop('contenteditable', 'false');
         $(this).siblings(':not(.edit)').addClass('hidden')
         $(this).addClass('hidden');
@@ -194,6 +202,7 @@
         }
         $('#added').remove();
         pulse = 0;
+        edit = 0;
     });
 </script>
     </main>
