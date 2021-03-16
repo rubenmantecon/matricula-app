@@ -33,8 +33,8 @@
     }
     function removeIncorrectChanges(){
         $('#deleteRegister > input').removeClass('error');
-
     }
+    
     function correctName(){
         var url;
         var delete_id=$('#deleteRegister > input').attr('id');
