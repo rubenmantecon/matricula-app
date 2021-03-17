@@ -26,14 +26,14 @@
 
                         <!-- Email Address -->
                         <div>
-                            <label for="email" :value="__('Email')" class="text-white">Usuari</label>
+                            <label for="email" :value="__('Email')" class="">Usuari</label>
 
                             <input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
                         </div>
 
                         <!-- Password -->
                         <div class="mt-4">
-                            <label for="password" :value="__('Password')" class="text-white">Contrasenya</label>
+                            <label for="password" :value="__('Password')" class="">Contrasenya</label>
 
                             <input id="password" class="block mt-1 w-full"
                                             type="password"

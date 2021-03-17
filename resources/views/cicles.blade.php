@@ -33,7 +33,7 @@
 			</div>
 		</div>
 	</header>
-	<div class="flex-1" id="breadcrumb">
+	<div class="flex-1">
 		<!-- fil d'ariadna -->
 
 		<main>
